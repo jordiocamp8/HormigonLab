@@ -1,0 +1,759 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#173f37"><meta name="description" content="Diseña, verifica y documenta mezclas de hormigón. Volumen absoluto, ensayos de áridos, humedad y dosificación por lote."><title>HormigónLab · Laboratorio de mezclas</title><style>@charset "UTF-8";
+:root{--paper:#f5f6f2;--white:#fff;--ink:#18372f;--muted:#6a7972;--line:#dfe5de;--green:#245b48;--mint:#e5ede3;--orange:#d98244;--red:#a73d33;--shadow:0 8px 28px #1c3b2310;font-family:Inter,"Segoe UI",Arial,sans-serif;color:var(--ink);background:var(--paper);font-synthesis:none}
+*{box-sizing:border-box}body{margin:0}button,input,select,textarea{font:inherit}button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}button{cursor:pointer}button:disabled{opacity:.42;cursor:not-allowed}button,a{touch-action:manipulation}a{color:var(--green)}button:focus-visible,a:focus-visible{outline:3px solid #e5a670;outline-offset:3px}button{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:9px;padding:10px 15px;font-weight:600;font-size:13px;transition:.18s}button:hover:not(:disabled){background:var(--mint);border-color:#b8cabc}.primary{background:var(--green);color:white;border-color:var(--green)}.primary:hover:not(:disabled){background:#183d32}.subtle{background:transparent}.icon{font-size:18px}.shell{display:grid;grid-template-columns:228px minmax(0,1fr);min-height:100vh}.sidebar{background:#173f37;color:#f8fbf6;position:sticky;top:0;height:100vh;padding:32px 20px;display:flex;flex-direction:column}.brand{display:flex;align-items:center;gap:10px;margin:0 8px 35px;font-size:20px;letter-spacing:-.7px;font-weight:750}.brand-mark{width:35px;height:37px;display:grid;place-items:center;border:1px solid #b9cfbf;border-radius:9px;transform:rotate(-5deg);color:#c4d8b8}.brand small{display:block;font-size:10px;letter-spacing:2px;font-weight:400;margin-top:5px;color:#b6c9bb}.nav-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#9eb9a9;margin:8px 12px 13px}.nav{display:grid;gap:5px}.nav button{background:transparent;border:0;color:#c8d7cc;text-align:left;display:flex;gap:12px;align-items:center;padding:13px 14px;font-weight:500;border-radius:8px}.nav button span:first-child{font-size:16px;min-width:18px}.nav button.active{background:#e8efdf;color:#1e4434;font-weight:650}.nav button:hover{background:#ffffff10;color:white}.nav button.active:hover{background:#e8efdf;color:#1e4434}.sidebar-foot{margin-top:auto;padding:20px 12px 0;font-size:11px;color:#b6c9bb;line-height:1.8}.sidebar-foot strong{display:block;color:#e4eddf;font-weight:500}.dot{width:6px;height:6px;display:inline-block;border-radius:50%;background:#bfd99f;margin-right:6px}.workspace{min-width:0}.topbar{height:76px;border-bottom:1px solid var(--line);padding:0 38px;display:flex;align-items:center;justify-content:space-between;background:#fcfdf9;gap:16px}.breadcrumb{font-size:12px;color:var(--muted)}.breadcrumb strong{color:var(--ink);font-weight:500;margin-left:8px}.top-actions{display:flex;gap:8px;align-items:center}.save-indicator{font-size:11px;color:var(--muted);margin-right:12px}main{padding:32px 38px 45px;max-width:1650px;margin:auto}.page-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:25px;margin-bottom:25px}.eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--green);font-weight:700;margin:0 0 12px}.page-heading h1{font-size:32px;line-height:1.16;letter-spacing:-1px;font-weight:600;margin:0 0 10px}.page-heading p{font-size:13px;color:var(--muted);margin:0;line-height:1.7;max-width:680px}.badge{display:inline-flex;align-items:center;border:1px solid #d9e1d3;border-radius:20px;background:#eaf0e4;padding:7px 10px;font-size:10px;color:#436145;white-space:nowrap;gap:6px}.badge.warn{background:#fbf0df;color:#886532;border-color:#eddfc8}.stepper{display:flex;border:1px solid var(--line);border-radius:12px;background:#fff;margin-bottom:25px;overflow:hidden}.stepper button{flex:1;border:0;border-radius:0;padding:15px 10px;background:transparent;color:var(--muted);font-size:12px}.stepper button.active{color:var(--green);box-shadow:inset 0 -2px var(--green);background:#f1f5ed}.stepper b{font-weight:500;display:inline-grid;place-items:center;border-radius:50%;background:#edf1e8;width:22px;height:22px;font-size:10px;margin-right:7px}.work-grid{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:24px;align-items:start}.card{background:#fff;border:1px solid var(--line);border-radius:13px;margin-bottom:20px;overflow:hidden}.card-head{padding:21px 24px 17px;border-bottom:1px solid #edf0e9;display:flex;align-items:center;justify-content:space-between;gap:15px}.card-head h2{font-size:15px;margin:0;font-weight:650;letter-spacing:-.2px}.card-head p{font-size:11px;line-height:1.6;color:var(--muted);margin:6px 0 0}.card-body{padding:22px 24px}.section-number{color:#779174;font-family:Consolas,monospace;font-size:11px;margin-right:9px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:20px}.fields.three{grid-template-columns:repeat(3,1fr)}.field{display:flex;flex-direction:column;gap:7px;min-width:0}.field.full{grid-column:1/-1}.field label{font-size:11px;font-weight:600;color:#44564b}.field .help{font-size:10px;color:var(--muted);line-height:1.5;min-height:15px}.input-wrap{display:flex;border:1px solid #dbe2d8;border-radius:7px;background:#fcfdf9;align-items:center;overflow:hidden;min-height:41px}.input-wrap:focus-within{border-color:#608b6a;box-shadow:0 0 0 3px #e7efe0}.input-wrap input,.input-wrap select{width:100%;min-width:0;background:transparent;border:0;padding:11px 12px;color:var(--ink);outline:none;font-size:13px}.input-wrap .unit{padding:0 11px 0 2px;font-size:10px;color:#84917e;white-space:nowrap}.field textarea{border:1px solid var(--line);border-radius:8px;background:#fcfdf9;padding:12px;min-height:75px;resize:vertical;color:var(--ink);font-size:13px}.inline-note{font-size:11px;line-height:1.7;color:var(--muted);background:#f3f6ef;padding:12px 14px;border-radius:7px;margin-top:18px}.warning{background:#fcf3e7;border-left:3px solid #dca160;color:#7a5b32;padding:12px 15px;font-size:11px;line-height:1.65;border-radius:5px;margin-bottom:18px}.error{background:#fff1ee;color:var(--red);border:1px solid #ecc7bf;padding:15px;border-radius:8px;font-size:12px;line-height:1.6}.snapshot{background:#eaf0e3;border:1px solid #d8e2ce;border-radius:13px;padding:23px;position:sticky;top:22px}.snapshot .eyebrow{color:#708664;font-size:9px}.snapshot h2{font-size:17px;font-weight:600;letter-spacing:-.4px;margin:0 0 8px}.snapshot .big{font-size:40px;letter-spacing:-1.7px;font-weight:600;line-height:1;margin-top:22px}.snapshot .big small{font-size:12px;font-weight:400;letter-spacing:0;color:#69845e}.snapshot .caption{color:#72846b;font-size:10px;margin:9px 0 22px}.summary-line{display:flex;justify-content:space-between;border-top:1px solid #d9e3d1;padding:14px 0;font-size:11px;gap:10px}.summary-line b{font-weight:650}.snapshot button{width:100%;margin-top:12px}.volume-bar{display:flex;height:12px;border-radius:4px;overflow:hidden;background:#eee;margin:16px 0}.legend{display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:10px;color:#73806b;margin-top:15px}.legend span:before{content:'';width:7px;height:7px;border-radius:2px;background:var(--swatch);display:inline-block;margin-right:6px}.mini-note{font-size:10px;line-height:1.7;color:var(--muted);margin-top:17px}.bottom-actions{display:flex;justify-content:space-between;gap:12px;margin:20px 0 0}.two-cols{display:grid;grid-template-columns:1fr 1fr;gap:22px}.metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:24px}.metric{background:#fff;border:1px solid var(--line);border-radius:11px;padding:20px}.metric label{display:block;font-size:10px;color:var(--muted);margin-bottom:15px}.metric strong{font-size:28px;font-weight:600;letter-spacing:-1px}.metric small{font-size:11px;color:var(--muted);margin-left:4px}.metric.feature{background:#e8efdf}.metric p{font-size:10px;color:var(--muted);margin:10px 0 0}.table-scroll{overflow:auto}table{width:100%;border-collapse:collapse;text-align:left;font-size:12px}th{font-weight:500;color:var(--muted);font-size:10px;letter-spacing:.2px;background:#f7f9f3}td,th{padding:14px 16px;border-bottom:1px solid #edf0e8;white-space:nowrap}tr:last-child td{border-bottom:0}td:not(:first-child),th:not(:first-child){text-align:right;font-variant-numeric:tabular-nums}.table-foot{font-size:10px;color:var(--muted);padding:14px 22px;line-height:1.7;background:#fcfdf9}.material-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:9px;background:var(--swatch)}.formula{font-family:Consolas,monospace;font-size:12px;background:#f4f7ef;padding:13px;border-radius:7px;line-height:1.8;overflow-wrap:anywhere;margin:10px 0 17px}.calculation{padding:19px 24px;border-bottom:1px solid #edf0e8}.calculation:last-child{border-bottom:0}.calculation h3{font-size:13px;font-weight:600;margin:0 0 8px}.calculation p{font-size:11px;line-height:1.75;color:var(--muted);margin:5px 0}.calculation code{color:var(--green);white-space:normal;line-height:1.8}details{border:1px solid var(--line);border-radius:9px;padding:14px 17px;background:#fff;margin:15px 0}summary{cursor:pointer;font-size:12px;font-weight:600}details li{font-size:11px;line-height:1.7;color:var(--muted);padding:3px 0}.result-chip{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 15px;background:#edf3e6;border-radius:7px;margin:16px 0;font-size:12px}.result-chip strong{font-size:18px;font-weight:600}.sieve-input{width:80px;border:1px solid var(--line);border-radius:5px;background:#fcfdf9;padding:7px;text-align:right;color:var(--ink)}.chart{width:100%;height:auto;display:block;max-height:260px;margin:15px auto}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.empty{text-align:center;padding:42px;color:var(--muted);font-size:13px;line-height:1.8}.project{padding:20px 23px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:15px;align-items:center}.project h3{font-size:14px;margin:0 0 7px}.project p{font-size:11px;color:var(--muted);margin:0}.project .toolbar{margin:0}.guide-copy{font-size:13px;line-height:1.85;color:#526252}.guide-copy h3{font-size:14px;color:var(--ink);margin-top:24px}.guide-copy li{margin:6px 0}.guide-copy a{overflow-wrap:anywhere}.muted{color:var(--muted)}.tiny{font-size:10px}.wide{width:100%}#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#173f37;color:white;padding:13px 23px;border-radius:9px;box-shadow:var(--shadow);z-index:20;max-width:90%;font-size:13px;display:none}#toast.visible{display:block}.skip{position:absolute;left:10px;top:-50px;background:#fff;padding:8px;z-index:30}.skip:focus{top:10px}#print-report{display:none}footer{font-size:10px;color:#8b9687;margin-top:25px;display:flex;justify-content:space-between;gap:10px;border-top:1px solid var(--line);padding-top:15px}
+@media(min-width:1450px){.work-grid{grid-template-columns:minmax(0,1fr) 330px}.card-body{padding:25px 30px}.fields{gap:23px 28px}.page-heading h1{font-size:36px}}
+@media(max-width:1150px){.shell{grid-template-columns:190px minmax(0,1fr)}.sidebar{padding:28px 12px}.brand{font-size:18px}.topbar{padding:0 24px}main{padding:25px 24px}.work-grid{grid-template-columns:minmax(0,1fr) 250px;gap:17px}.card-body,.card-head{padding:18px}.fields.three{grid-template-columns:1fr 1fr}.save-indicator{display:none}.snapshot{padding:19px}.metric strong{font-size:24px}}
+@media(max-width:950px){.work-grid{grid-template-columns:1fr}.snapshot{position:static}.snapshot .big{margin-top:10px}.snapshot .summary-line{display:inline-flex;gap:20px;margin-right:20px}.snapshot .legend{display:flex;flex-wrap:wrap}.two-cols{grid-template-columns:1fr}.metric-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:680px){.shell{display:block}.sidebar{height:auto;position:relative;padding:17px 15px}.brand{margin:0 3px 17px}.brand small{display:none}.sidebar-foot,.nav-label{display:none}.nav{display:flex;overflow-x:auto;gap:6px}.nav button{flex-shrink:0;padding:9px 11px;font-size:11px}.nav button span:first-child{font-size:13px;min-width:10px}.topbar{height:62px;padding:0 17px}.breadcrumb{font-size:10px}.top-actions button{padding:8px;font-size:11px}main{padding:24px 16px}.page-heading{gap:12px}.page-heading h1{font-size:28px}.page-heading p{font-size:12px}.page-heading>.badge{display:none}.stepper button{font-size:10px;padding:12px 4px}.stepper b{display:none}.fields,.fields.three{grid-template-columns:1fr}.metric{padding:16px}.metric strong{font-size:25px}.project{align-items:flex-start;flex-direction:column}.card-head{align-items:flex-start}.snapshot .big{font-size:35px}.bottom-actions{flex-wrap:wrap}footer{line-height:1.7}.metric-grid{gap:10px}.table-scroll{max-width:100%}}
+@media print{@page{margin:15mm}body{background:white;color:black;font:10pt Arial,sans-serif}#app,#toast,.skip,#import-file{display:none!important}#print-report{display:block}#print-report h1{font-size:21pt}#print-report h2{font-size:14pt;margin-top:22px;break-after:avoid}#print-report p,#print-report li{font-size:9pt;line-height:1.5}#print-report table{font-size:9pt}#print-report th,#print-report td{padding:7px;border-bottom:1px solid #ddd;white-space:normal}#print-report tr{break-inside:avoid}#print-report .formula{font-size:9pt}#print-report a{color:inherit;text-decoration:none}.no-print{display:none!important}}
+
+.mode-banner{display:flex;justify-content:space-between;gap:18px;align-items:center;padding:15px 18px;border-radius:10px;margin-bottom:25px;border:1px solid #e0c799;background:#fcf3e7}.mode-banner strong{font-size:11px;letter-spacing:.7px}.mode-banner span{display:block;font-size:11px;line-height:1.6;margin-top:6px;max-width:650px}.mode-banner .toolbar{margin:0;flex-shrink:0}.mode-banner.real{background:#e8f0e6;border-color:#bfd1be}.limit-input{width:57px;padding:7px 4px;border:1px solid var(--line);border-radius:4px}.report-cover{padding:30px 0}.calculation code{overflow-wrap:anywhere}@media(max-width:1150px){.mode-banner{align-items:flex-start;flex-direction:column}}@media print{#print-report .report-cover{break-after:page;min-height:230mm;padding:35mm 0}#print-report .calculation{break-inside:avoid;padding:12px 0}#print-report .table-scroll{overflow:visible}#print-report td{overflow-wrap:anywhere}#print-report code{font-size:9pt}}
+</style></head>
+<body><a class="skip" href="#main">Ir al contenido</a><div id="app"></div><div id="toast" role="status" aria-live="polite"></div><div id="print-report"></div><input id="import-file" type="file" accept=".json,application/json" hidden><script>/* HormigónLab — motor independiente; unidades internas kg, m, MPa.
+   Tablas históricas ACI 211 reproducidas por UT Austin/TxDOT (2010).
+   Resistencia media: FHWA 1608 (03/2026); humedad: FHWA 1638 (02/2007).
+   El cierre matemático no certifica resistencia, trabajabilidad ni conformidad normativa. */
+(function (root, factory) {
+  const api = factory();
+  if (typeof module === 'object' && module.exports) module.exports = api;
+  else root.Hormigon = api;
+})(typeof globalThis !== 'undefined' ? globalThis : this, function () {
+  'use strict';
+  const PSI = 0.006894757293168361, PCY = 0.45359237 / Math.pow(0.9144, 3);
+  const sizes = [9.5, 12.5, 19, 25, 37.5];
+  const waterTable = {
+    plain: [[350,335,315,300,275],[385,365,340,325,300],[410,385,360,340,315]],
+    air: [[305,295,280,270,250],[340,325,305,295,275],[365,345,325,310,290]]
+  };
+  const coarseTable = [[.50,.48,.46,.44],[.59,.57,.55,.53],[.66,.64,.62,.60],[.71,.69,.67,.65],[.75,.73,.71,.69]];
+  const defaults = {
+    name: 'Mezcla de práctica · 28 MPa', author: 'Demostración', reference: 'ACI 211 histórico · referencias de ensayos ASTM / NTE INEN', notes: '',
+    dataMode: 'demo', experimentalRecorded: false, cementType: 'Portland (demostración)', cementSource: '', waterSource: 'Demostración', waterQuality: 'unknown',
+    application: 'Hormigón convencional', exposure: 'Sin clasificación declarada', exposureReference: '', targetSlump: 90,
+    university: 'Universidad Técnica Particular de Loja (UTPL)', course: 'Diseño de Hormigones', teacher: 'Ing. Agustín Ruiz',
+    objective: 'Predosificar hormigón convencional de densidad normal mediante volúmenes absolutos.',
+    fc: 28, strengthMode: 'noHistory', fcrManual: 36.3, sd: 3.5, n: 30,
+    size: 19, slumpBand: '1', entrained: false, air: 2,
+    waterMode: 'table', waterManual: 200, reduction: 0, wcMode: 'table', wcManual: .48,
+    maxWC: .50, minCement: 0, maxCement: 0, coarseMode: 'table', coarseManual: .62,
+    fineSGBasis: 'ssd', coarseSGBasis: 'ssd',
+    cementSG: 3.15, fineSG: 2.62, coarseSG: 2.65, fineAbs: 1.2, coarseAbs: .8,
+    fineMoist: 4.5, coarseMoist: 1.1, rodded: 1600, fm: 2.8,
+    admName: '', admDose: 0, admDensity: 1100, admWater: 70,
+    volume: 1, waste: 3, mixer: 200, bag: 50,
+    priceCement: .18, priceFine: .018, priceCoarse: .022, priceWater: .002, priceAdm: 2.5,
+    trialVolume: .03, trialDensity: 2350, trialSlump: 90, trialAir: 2,
+    cylinderDiameter: 150, cylinderHeight: 300, cylinderCount: 6,
+    age: 28, testLoad: 500, testDiameter: 150,
+    sieveInitial: 1000, sieves: [0,20,100,180,260,240,160,25,15],
+    labWet: 1045, labDry: 1000, labTare: 0,
+    labCoarseDry: 2500, labCoarseSSD: 2520, labSubmerged: 1570,
+    labFineDry: 494, labFineSSD: 500, labPycWater: 650, labPycSample: 959,
+    labContainer: 5, labContainerFull: 21, labContainerLitres: 10
+  };
+  const isNum = v => typeof v === 'number' && Number.isFinite(v);
+  // Only new optional fields receive legacy defaults. Missing laboratory data never do.
+  const optionalKeys = ['dataMode','experimentalRecorded','cementType','cementSource','waterSource','waterQuality','application','exposure','exposureReference','targetSlump','maxCement','fineSGBasis','coarseSGBasis','university','course','teacher','objective','admName'];
+  const numericLabels = {fc:'f′c',size:'TMN',air:'Aire objetivo',cementSG:'Densidad relativa del cemento',fineSG:'Densidad relativa de arena',coarseSG:'Densidad relativa de grava',fineAbs:'Absorción de arena',coarseAbs:'Absorción de grava',fineMoist:'Humedad de arena',coarseMoist:'Humedad de grava',rodded:'Masa unitaria seca compactada',fm:'Módulo de finura',targetSlump:'Asentamiento objetivo',waterManual:'Agua manual',wcManual:'Relación a/c manual',coarseManual:'Fracción de grava manual',fcrManual:'f′cr manual',sd:'Desviación muestral',n:'Número de ensayos'};
+  function normalize(d) {
+    if(!d || typeof d!=='object' || Array.isArray(d))throw new Error('Ingresa un objeto de diseño válido.');
+    const out={...d};
+    optionalKeys.forEach(k=>{if(out[k]===undefined)out[k]=defaults[k];});
+    return out;
+  }
+  function required(d) {
+    const keys=['fc','size','air','cementSG','fineSG','coarseSG','fineAbs','coarseAbs','fineMoist','coarseMoist','rodded','fm','targetSlump','reduction','admDose','maxWC','minCement','maxCement','volume','waste','mixer','bag','priceCement','priceFine','priceCoarse','priceWater','priceAdm'];
+    if(d.admDose>0)keys.push('admDensity','admWater');
+    if(d.waterMode==='manual')keys.push('waterManual');
+    if(d.wcMode==='manual')keys.push('wcManual');
+    if(d.coarseMode==='manual')keys.push('coarseManual');
+    if(d.strengthMode==='manual')keys.push('fcrManual');
+    if(d.strengthMode==='history')keys.push('sd','n');
+    return keys;
+  }
+  function createRealDesign(identity={}) {
+    const d={...defaults,sieves:Array(9).fill(null),dataMode:'real',name:'',author:'',notes:'',cementType:'',cementSource:'',waterSource:'',waterQuality:'unknown',exposure:'Sin clasificación declarada',exposureReference:''};
+    const empty=['fc','fcrManual','sd','n','size','air','targetSlump','waterManual','wcManual','coarseManual','cementSG','fineSG','coarseSG','fineAbs','coarseAbs','fineMoist','coarseMoist','rodded','fm','admDensity','admWater','trialVolume','trialDensity','trialSlump','trialAir','age','testLoad','testDiameter','sieveInitial','labWet','labDry','labTare','labCoarseDry','labCoarseSSD','labSubmerged','labFineDry','labFineSSD','labPycWater','labPycSample','labContainer','labContainerFull','labContainerLitres'];
+    empty.forEach(k=>d[k]=null);
+    ['maxWC','minCement','maxCement','admDose','reduction','waste','priceCement','priceFine','priceCoarse','priceWater','priceAdm'].forEach(k=>d[k]=0);
+    ['name','author'].forEach(k=>{if(typeof identity?.[k]==='string')d[k]=identity[k];});
+    return d;
+  }
+  function check(v, lo, hi, name) {
+    if (!isNum(v) || v < lo || v > hi) throw new Error(name + ': ingresa un número entre ' + lo + ' y ' + hi + '.');
+    return v;
+  }
+  function interpolate(points, x) {
+    if(!Array.isArray(points)||points.length<2||points.some((p,i)=>!Array.isArray(p)||p.length!==2||!isNum(p[0])||!isNum(p[1])||(i>0&&p[0]<=points[i-1][0])))throw new Error('La tabla requiere al menos dos puntos numéricos con abscisas estrictamente crecientes.');
+    if (!isNum(x) || x < points[0][0] || x > points[points.length-1][0]) throw new Error('Valor fuera de la tabla; utiliza un valor manual sustentado en ensayos.');
+    for (let i=1;i<points.length;i++) if (x<=points[i][0]) {
+      const [x0,y0]=points[i-1], [x1,y1]=points[i];
+      return y0+(y1-y0)*(x-x0)/(x1-x0);
+    }
+    return points[0][1];
+  }
+  function targetStrength(d) {
+    if(!d || typeof d!=='object')throw new Error('Ingresa los datos de resistencia.');
+    check(d.fc,7,100,"f′c");
+    if (d.strengthMode==='manual') return {value:check(d.fcrManual,d.fc,140,"f′cr manual"), factor:null, rule:'Valor manual del proyecto'};
+    const fc=d.fc/PSI;
+    if (d.strengthMode==='history') {
+      check(d.sd,.01,30,'Desviación estándar'); check(d.n,15,10000,'Número de ensayos');
+      if (!Number.isInteger(d.n)) throw new Error('El número de ensayos debe ser entero.');
+      const k=d.n>=30?1:interpolate([[15,1.16],[20,1.08],[25,1.03],[30,1]],d.n), s=d.sd/PSI*k;
+      const first=fc+1.34*s,second=fc<=5000?fc+2.33*s-500:.9*fc+2.33*s;
+      return {value:Math.max(first,second)*PSI,factor:k,fcPsi:fc,modifiedSD:d.sd*k,candidates:[first*PSI,second*PSI],historyEligible:true,rule:fc<=5000?'máx(f′c + 1,34ks; f′c + 2,33ks − 500 psi)':'máx(f′c + 1,34ks; 0,90f′c + 2,33ks)'};
+    }
+    if(d.strengthMode!=='noHistory') throw new Error('Modo de resistencia desconocido.');
+    return {value:(fc<3000?fc+1000:fc<=5000?fc+1200:1.1*fc+700)*PSI,factor:null,fcPsi:fc,historyEligible:false,rule:fc<3000?'f′c + 1000 psi':fc<=5000?'f′c + 1200 psi':'1,10f′c + 700 psi'};
+  }
+  function moisture(ssd, absorption, total) {
+    check(ssd,0,10000,'Masa SSS'); check(absorption,0,30,'Absorción'); check(total,0,50,'Humedad');
+    const dry=ssd/(1+absorption/100), wet=dry*(1+total/100);
+    return {dry,ssd,wet,free:wet-ssd};
+  }
+  function calculate(d) {
+    const errors=[], warnings=[]; let result;
+    try {
+      d=normalize(d);
+      required(d).forEach(k=>{if(!isNum(d[k]))errors.push('Falta un valor numérico válido en '+(numericLabels[k]||k)+'.');});
+      if(errors.length)return {ok:false,errors,warnings,mathematicalValidated:false,experimentalValidated:false,normativeValidated:false};
+      if(!['demo','real'].includes(d.dataMode))throw new Error('Selecciona datos de demostración o datos reales.');
+      if(typeof d.entrained!=='boolean')throw new Error('El estado de aire incorporado debe ser verdadero o falso.');
+      const strength=targetStrength(d), index=sizes.indexOf(d.size);
+      if(index<0) throw new Error('Selecciona un tamaño nominal disponible.');
+      check(d.air,0,12,'Aire'); check(d.cementSG,2,4,'Densidad relativa del cemento');
+      check(d.fineSG,1.8,3.5,'Densidad relativa de arena'); check(d.coarseSG,1.8,3.5,'Densidad relativa de grava');
+      check(d.fineAbs,0,30,'Absorción de arena');check(d.coarseAbs,0,30,'Absorción de grava');
+      check(d.fineMoist,0,50,'Humedad de arena');check(d.coarseMoist,0,50,'Humedad de grava');
+      if(!['ssd','od','dry'].includes(d.fineSGBasis)||!['ssd','od','dry'].includes(d.coarseSGBasis))throw new Error('Selecciona la base SSS o seca de cada densidad relativa.');
+      const fineSGSSD=d.fineSGBasis==='ssd'?d.fineSG:d.fineSG*(1+d.fineAbs/100),coarseSGSSD=d.coarseSGBasis==='ssd'?d.coarseSG:d.coarseSG*(1+d.coarseAbs/100);
+      const fineSGOD=fineSGSSD/(1+d.fineAbs/100),coarseSGOD=coarseSGSSD/(1+d.coarseAbs/100);
+      check(d.rodded,800,2200,'Densidad seca compactada'); check(d.fm,1,4.5,'Módulo de finura');
+      if(d.rodded>coarseSGOD*1000)throw new Error('La masa unitaria seca compactada supera la densidad de las partículas secas de grava; revisa la base y las unidades.');
+      check(d.targetSlump,0,250,'Asentamiento objetivo');
+      check(d.reduction,0,40,'Reducción de agua'); check(d.maxWC,0,.9,'Límite a/c'); check(d.minCement,0,700,'Cemento mínimo');check(d.maxCement,0,1000,'Cemento máximo');
+      if(d.maxCement>0&&d.minCement>d.maxCement)throw new Error('El cemento mínimo supera el máximo especificado.');
+      check(d.admDose,0,5,'Dosificación del aditivo');
+      if(d.admDose>0){check(d.admDensity,800,2000,'Densidad del aditivo'); check(d.admWater,0,100,'Agua del aditivo');}
+      const admDensity=d.admDose>0?d.admDensity:1000,admWater=d.admDose>0?d.admWater:0;
+      check(d.volume,.0001,1e6,'Volumen'); check(d.waste,0,30,'Reserva'); check(d.mixer,1,20000,'Capacidad útil'); check(d.bag,1,100,'Masa de saco');
+      ['priceCement','priceFine','priceCoarse','priceWater','priceAdm'].forEach(k=>check(d[k],0,1000,'Precio '+k));
+      if(!['0','1','2'].includes(d.slumpBand))throw new Error('Selecciona un intervalo de asentamiento válido; un campo vacío no equivale al primer intervalo.');
+      const band=Number(d.slumpBand);
+      if(!Number.isInteger(band)||band<0||band>2)throw new Error('Intervalo de asentamiento inválido.');
+      const baseWater=d.waterMode==='manual'?check(d.waterManual,80,350,'Agua manual'):d.waterMode==='table'?waterTable[d.entrained?'air':'plain'][band][index]*PCY:NaN;
+      if(!isNum(baseWater))throw new Error('Modo de agua desconocido.');
+      const water=baseWater*(1-d.reduction/100);
+      let wcStrength;
+      if(d.wcMode==='manual') wcStrength=check(d.wcManual,.2,.9,'Relación a/c manual');
+      else if(d.wcMode==='table') {
+        const pts=d.entrained?[[2000,.74],[3000,.59],[4000,.48],[5000,.40]]:[[2000,.82],[3000,.68],[4000,.57],[5000,.48],[6000,.41]];
+        try { wcStrength=interpolate(pts,strength.value/PSI); }
+        catch {throw new Error('f′cr está fuera de la tabla histórica a/c ('+(2000*PSI).toFixed(1)+'–'+(pts.at(-1)[0]*PSI).toFixed(1)+' MPa). Introduce una a/c de ensayo en modo manual.');}
+      } else throw new Error('Modo a/c desconocido.');
+      const selectedWC=d.maxWC>0?Math.min(wcStrength,d.maxWC):wcStrength;
+      const cement=Math.max(water/selectedWC,d.minCement), actualWC=water/cement;
+      if(d.maxCement>0&&cement>d.maxCement+1e-9)throw new Error('El cemento calculado ('+cement.toFixed(2)+' kg/m³) supera el máximo especificado ('+d.maxCement+' kg/m³). No se reduce automáticamente: revisa agua, a/c y restricciones.');
+      const coarseFraction=d.coarseMode==='manual'?check(d.coarseManual,.25,.85,'Fracción compactada'):d.coarseMode==='table'?interpolate([2.4,2.6,2.8,3].map((v,i)=>[v,coarseTable[index][i]]),d.fm):NaN;
+      if(!isNum(coarseFraction))throw new Error('Modo de grava desconocido.');
+      const coarseDry=coarseFraction*d.rodded, coarseSSD=coarseDry*(1+d.coarseAbs/100);
+      const admixture=cement*d.admDose/100, admixtureWater=admixture*admWater/100;
+      // Vwater includes admixture water; only its remaining volume is added separately.
+      const volumes={cement:cement/(d.cementSG*1000),water:water/1000,coarse:coarseSSD/(coarseSGSSD*1000),air:d.air/100,admixture:admixture/admDensity-admixtureWater/1000};
+      if(volumes.admixture < -1e-10) throw new Error('La densidad y la fracción de agua del aditivo producen un volumen residual negativo. Revisa la ficha técnica.');
+      volumes.fine=1-Object.values(volumes).reduce((a,b)=>a+b,0);
+      if(volumes.fine<=0)throw new Error('La suma de cemento, agua, grava, aire y aditivo supera 1 m³. No queda volumen para arena.');
+      const fineSSD=volumes.fine*fineSGSSD*1000, fine=moisture(fineSSD,d.fineAbs,d.fineMoist), coarse=moisture(coarseSSD,d.coarseAbs,d.coarseMoist);
+      const addedWater=water-fine.free-coarse.free-admixtureWater;
+      if(addedWater<0)throw new Error('El agua aportada por áridos y aditivo supera el agua efectiva. Ajusta las humedades o los materiales antes de dosificar.');
+      const totalMass=cement+fine.wet+coarse.wet+addedWater+admixture;
+      const totalVolume=Object.values(volumes).reduce((a,b)=>a+b,0), batchVolume=d.volume*(1+d.waste/100), batchRatio=batchVolume/(d.mixer/1000),batches=Math.max(1,Math.ceil(batchRatio-8*Number.EPSILON*Math.max(1,batchRatio)));
+      const rows=[
+        {key:'cement',name:'Cemento',dry:cement,ssd:cement,wet:cement,price:d.priceCement},
+        {key:'fine',name:'Arena',...fine,price:d.priceFine},
+        {key:'coarse',name:'Grava',...coarse,price:d.priceCoarse},
+        {key:'water',name:'Agua a añadir',dry:water+fine.ssd-fine.dry+coarse.ssd-coarse.dry-admixtureWater,ssd:water-admixtureWater,wet:addedWater,price:d.priceWater},
+        {key:'admixture',name:'Aditivo líquido',dry:admixture,ssd:admixture,wet:admixture,price:d.priceAdm}
+      ];
+      const cost=rows.reduce((s,r)=>s+r.wet*r.price,0);
+      warnings.push('Predosificación: la resistencia y la trabajabilidad deben comprobarse con mezclas de prueba.');
+      warnings.push(d.dataMode==='demo'?'DATOS DE DEMOSTRACIÓN: los valores precargados no representan ensayos reales.':'Datos declarados por el usuario: su trazabilidad y representatividad deben documentarse.');
+      warnings.push('Las referencias de ensayo ASTM / NTE INEN no certifican el cumplimiento de sus procedimientos. No se ha establecido una guía específica de dosificación del curso.');
+      if(d.waterMode==='table'||d.wcMode==='table'||d.coarseMode==='table')warnings.push('Las tablas automáticas son referencias históricas ACI 211; no representan una implementación íntegra de ACI 211.1-22.');
+      if(d.maxWC===0)warnings.push('No se ha definido un límite de a/c por exposición.');
+      if(d.minCement===0)warnings.push('No se ha definido contenido mínimo de cemento por especificación.');
+      if(!d.exposure||d.exposure==='Sin clasificación declarada'||!d.exposureReference)warnings.push('La exposición y su referencia normativa no están documentadas; no se asignan límites automáticos.');
+      if(!d.waterSource||d.waterQuality==='unknown')warnings.push('La procedencia o calidad del agua queda pendiente de documentar y comprobar.');
+      if(d.waterMode==='table') {
+        const range=[[25.4,50.8],[76.2,101.6],[152.4,177.8]][band];
+        if(d.targetSlump<range[0]||d.targetSlump>range[1])warnings.push('El asentamiento objetivo queda fuera de la banda de agua elegida ('+range[0]+'–'+range[1]+' mm); revisa la selección.');
+      }
+      if(d.reduction>0)warnings.push('La reducción de agua es un dato del usuario y requiere verificación con el aditivo y los materiales reales.');
+      if(d.reduction>0&&d.admDose===0)warnings.push('Se declaró reducción de agua sin dosis de aditivo; documenta el origen experimental de esta reducción.');
+      if(d.entrained)warnings.push('El aire objetivo se ingresa manualmente según la exposición y se verifica mediante ensayo.');
+      if(d.strengthMode==='history')warnings.push('El historial debe corresponder a ensayos independientes y condiciones comparables; no cuentes cilindros individuales como ensayos.');
+      if(volumes.fine<.18||volumes.fine>.42)warnings.push('La fracción absoluta de arena es atípica: revisa la combinación de áridos y la trabajabilidad.');
+      if(cement>400)warnings.push('Cemento superior a 400 kg/m³: indicador orientativo de contenido relativamente elevado, no límite normativo. Analiza agua, trabajabilidad, áridos y aditivo mediante ensayos; no reduzcas cemento arbitrariamente.');
+      if(totalMass<2000||totalMass>2600)warnings.push('La masa teórica queda fuera del intervalo orientativo 2000–2600 kg/m³ de hormigón convencional; comprueba las densidades y el alcance del método.');
+      if([d.priceCement,d.priceFine,d.priceCoarse,d.priceWater].some(v=>v===0))warnings.push('Hay precios en cero: el costo puede estar incompleto y no constituye una cotización.');
+      const waterRow=rows.find(r=>r.key==='water'),waterBalance={absorbed:fine.ssd-fine.dry+coarse.ssd-coarse.dry,free:fine.free+coarse.free,admixture:admixtureWater,added:addedWater,effective:water,reconstructed:addedWater+fine.free+coarse.free+admixtureWater,dryAdded:waterRow.dry,ssdAdded:waterRow.ssd};
+      result={strength,baseWater,water,wcStrength,selectedWC,actualWC,cement,coarseFraction,fine,coarse,fineSGSSD,coarseSGSSD,fineSGOD,coarseSGOD,admixture,admixtureWater,addedWater,waterBalance,volumes,totalVolume,totalMass,rows,cost,batchVolume,batches,perBatch:batchVolume/batches,ratio:[1,fineSSD/cement,coarseSSD/cement,actualWC]};
+    } catch(e) {errors.push(e.message);}
+    return {ok:errors.length===0,errors,warnings,mathematicalValidated:errors.length===0,experimentalValidated:false,normativeValidated:false,...result};
+  }
+  function sieve(masses,initial) {
+    if(!Array.isArray(masses)||masses.length!==9)throw new Error('Se requieren nueve masas: ocho tamices y fondo.');
+    masses.forEach(v=>check(v,0,1e6,'Masa retenida'));check(initial,.01,1e6,'Masa inicial');
+    const total=masses.reduce((a,b)=>a+b,0);if(total<=0)throw new Error('Ingresa masas retenidas.');
+    let cumulative=0; const rows=masses.map((m,i)=>{const retained=m/initial*100;cumulative+=retained;return {sieve:[9.5,4.75,2.36,1.18,.6,.3,.15,.075,0][i],mass:m,retained,cumulative,passing:100-cumulative};});
+    const difference=(total-initial)/initial*100;
+    return {rows,total,difference,fm:rows.slice(0,7).reduce((a,r)=>a+r.cumulative,0)/100,valid:Math.abs(difference)<=.3};
+  }
+  function labMoisture(wet,dry,tare) {check(tare,0,1e8,'Tara');check(dry,tare+.000001,1e8,'Masa seca + tara');check(wet,dry,1e8,'Masa húmeda + tara');return (wet-dry)/(dry-tare)*100;}
+  function labCoarse(dry,ssd,submerged) {check(dry,.001,1e8,'Masa seca');check(ssd,dry,1e8,'Masa SSS');check(submerged,0,dry-.000001,'Masa sumergida');return {od:dry/(ssd-submerged),ssd:ssd/(ssd-submerged),apparent:dry/(dry-submerged),abs:(ssd-dry)/dry*100};}
+  function labFine(dry,ssd,pycWater,pycSample) {check(dry,.001,1e8,'Masa seca');check(ssd,dry,1e8,'Masa SSS');check(pycWater,.001,1e8,'Picnómetro con agua');check(pycSample,pycWater+.000001,pycWater+dry-.000001,'Picnómetro con muestra y agua');return {od:dry/(pycWater+ssd-pycSample),ssd:ssd/(pycWater+ssd-pycSample),apparent:dry/(pycWater+dry-pycSample),abs:(ssd-dry)/dry*100};}
+  function bulkDensity(tare,full,litres) {check(tare,0,1e6,'Tara');check(full,tare+.000001,1e6,'Recipiente lleno');check(litres,.001,1e6,'Volumen del recipiente');return (full-tare)/(litres/1000);}
+  function compression(loadKN,diameterMM) {check(loadKN,.001,1e5,'Carga');check(diameterMM,10,1000,'Diámetro');return loadKN*1000/(Math.PI*diameterMM**2/4);}
+  function stats(values) {if(!Array.isArray(values)||values.length<2)throw new Error('Ingresa al menos dos resultados de ensayo.');values.forEach(v=>check(v,.01,200,'Resistencia'));const n=values.length,mean=values.reduce((a,b)=>a+b,0)/n,sd=Math.sqrt(values.reduce((s,x)=>s+(x-mean)**2,0)/(n-1)),historyEligible=n>=15&&sd>=.01&&sd<=30,warnings=[];if(n<15)warnings.push('Historial insuficiente: se requieren al menos 15 ensayos independientes comparables.');if(sd<.01)warnings.push('La variabilidad es nula o demasiado pequeña para el modo con historial; revisa los datos y su precisión.');if(sd>30)warnings.push('La desviación supera el alcance admitido por el programa.');warnings.push('Estos estadísticos no demuestran aceptación experimental ni cumplimiento normativo.');return {n,mean,sd,cv:100*sd/mean,historyEligible,warnings,experimentalValidated:false};}
+  function trial(r,volume,density) {if(!r.ok)throw new Error('Resuelve los errores del diseño.');check(volume,.0001,100,'Volumen de prueba');check(density,500,4000,'Densidad fresca medida');const mass=r.totalMass*volume,yieldVolume=mass/density;return {mass,yieldVolume,relative:yieldVolume/volume,factor:volume/yieldVolume,rows:r.rows.map(x=>({...x,normalized:x.wet*volume/yieldVolume}))};}
+  function cylinders(diameter,height,count,reserve) {check(diameter,20,1000,'Diámetro');check(height,20,3000,'Altura');check(count,1,10000,'Número de probetas');if(!Number.isInteger(count))throw new Error('El número de probetas debe ser entero.');check(reserve,0,30,'Reserva');return Math.PI/4*(diameter/1000)**2*(height/1000)*count*(1+reserve/100);}
+  const validate=d=>{const r=calculate(d);return {ok:r.ok,errors:r.errors,warnings:r.warnings};};
+  return {defaults,createRealDesign,normalize,required,validate,calculate,moisture,targetStrength,interpolate,sieve,labMoisture,labCoarse,labFine,bulkDensity,compression,stats,trial,cylinders,PSI,PCY,sizes,waterTable,coarseTable};
+});
+</script><script>(function (root, factory) {
+  if (typeof module === 'object' && module.exports) module.exports = factory();
+  else root.HormigonGrading = factory();
+}(typeof globalThis !== 'undefined' ? globalThis : this, function () {
+  'use strict';
+
+  // Numerical comparison tolerance only; this is NOT a laboratory tolerance.
+  const EPS = 1e-9;
+  const referenceUrl = 'https://studylib.es/doc/9536391/nte-inen-872---%C3%A1ridos-para-hormig%C3%B3n.-requisitos';
+  const methodUrl = 'https://awsassets.panda.org/downloads/fz08_producto_2_marcelo_castillo_corregido___anexo.pdf';
+  const revisionUrl = 'https://www.registroficial.gob.ec/registro-oficial-no-318-21/';
+  const defaultSieves = {
+    fine: [9.5, 4.75, 2.36, 1.18, .6, .3, .15, .075, 0],
+    coarse: [37.5, 25, 19, 12.5, 9.5, 4.75, 2.36, 0]
+  };
+  const fineSeries = [9.5, 4.75, 2.36, 1.18, .6, .3, .15];
+  const fmSeries = [150, 75, 37.5, 19, 9.5, 4.75, 2.36, 1.18, .6, .3, .15];
+  const limits = values => values.map(([sieve, min, max]) => ({sieve, min, max}));
+  const historicalNote = 'Referencia histórica de 2011. La segunda revisión de NTE INEN 872 se oficializó en julio de 2026; su texto no se ha cotejado. Esta comparación no acredita conformidad con la edición de 2026.';
+  const profiles = [
+    {id: 'none', label: 'Sin envolvente: solo cálculo', kind: 'any', sieves: [], limits: [], source: 'Sin criterio de aceptación seleccionado', edition: '', notes: []},
+    {id: 'inen872-2011-fine', label: 'Arena · referencia histórica NTE INEN 872:2011', kind: 'fine', sieves: defaultSieves.fine.slice(),
+      limits: limits([[9.5,100,100],[4.75,95,100],[2.36,80,100],[1.18,50,85],[.6,25,60],[.3,5,30],[.15,0,10]]),
+      source: 'NTE INEN 872:2011, primera revisión, 5.1.2.1 y 5.1.2.2; copia del documento INEN alojada en StudyLib', edition: '2011 (histórica)', referenceUrl,
+      fmLimits: {min: 2.3, max: 3.1}, maxBetween: 45, notes: [historicalNote, 'Compara gradación, fracción entre tamices y MF. No aplica automáticamente excepciones ni acepta el agregado o la mezcla.']},
+    {id: 'inen872-2011-57', label: 'Grava n.º 57 · referencia histórica NTE INEN 872:2011', kind: 'coarse', sieves: defaultSieves.coarse.slice(),
+      limits: limits([[37.5,100,100],[25,95,100],[12.5,25,60],[4.75,0,10],[2.36,0,5]]),
+      source: 'NTE INEN 872:2011, primera revisión, tabla 2, tamaño n.º 57; copia del documento INEN alojada en StudyLib', edition: '2011 (histórica)', referenceUrl,
+      notes: [historicalNote, 'La banda n.º 57 se selecciona expresamente. No determina automáticamente el tamaño máximo nominal utilizado en la dosificación.']},
+    {id: 'custom', label: 'Envolvente personalizada · criterio del usuario', kind: 'any', sieves: [], limits: [], source: 'Límites introducidos por el usuario; sin atribución normativa', edition: 'Personalizada', notes: ['La envolvente personalizada no se presenta como requisito normativo. Su justificación corresponde al usuario.']}
+  ];
+
+  function freezeDeep(value) {
+    if (value && typeof value === 'object' && !Object.isFrozen(value)) {
+      Object.values(value).forEach(freezeDeep);
+      Object.freeze(value);
+    }
+    return value;
+  }
+  function number(value, label) {
+    if (typeof value !== 'number' || !Number.isFinite(value)) throw new Error(label + ': ingrese un número finito.');
+    return value;
+  }
+  function sieveLabel(mm) { return mm === 0 ? 'Fondo' : String(mm).replace('.', ',') + ' mm'; }
+  function checkedSieves(values) {
+    if (!Array.isArray(values) || values.length < 2) throw new Error('Ingrese una serie de tamices y el fondo.');
+    const result = values.map((x, i) => {
+      number(x, 'Abertura del tamiz ' + (i + 1));
+      if (x < 0 || (i > 0 && x >= values[i - 1])) throw new Error('Los tamices deben tener aberturas no negativas y estar en orden estrictamente descendente.');
+      return x;
+    });
+    if (result[result.length - 1] !== 0) throw new Error('La última fila debe ser el fondo, con abertura 0.');
+    return result;
+  }
+  function checkedLimits(values, sieves) {
+    if (!Array.isArray(values) || !values.length) throw new Error('Ingrese al menos un límite para la envolvente personalizada.');
+    const seen = new Set();
+    const result = values.map((value, i) => {
+      if (!value || typeof value !== 'object') throw new Error('Límite personalizado inválido en fila ' + (i + 1) + '.');
+      const {sieve, min, max} = value;
+      number(sieve, 'Tamiz del límite'); number(min, 'Límite mínimo'); number(max, 'Límite máximo');
+      if (sieve <= 0 || !sieves.includes(sieve) || seen.has(sieve)) throw new Error('Cada límite debe referirse a un tamiz presente, distinto del fondo y sin duplicados.');
+      if (min < 0 || max > 100 || min > max) throw new Error('Los límites deben cumplir 0 ≤ mínimo ≤ máximo ≤ 100.');
+      seen.add(sieve);
+      return {sieve, min, max};
+    }).sort((a, b) => b.sieve - a.sieve);
+    // A passing curve cannot increase as the aperture decreases. Reject even
+    // individually valid intervals if no monotone passing curve can cross them.
+    let possibleMaximum = 100;
+    for (const item of result) {
+      possibleMaximum = Math.min(possibleMaximum, item.max);
+      if (item.min > possibleMaximum + EPS) throw new Error('Envolvente incompatible: el porcentaje que pasa no puede aumentar al disminuir la abertura.');
+    }
+    return result;
+  }
+
+  function analyze(input) {
+    if (!input || typeof input !== 'object') throw new Error('Ingrese los datos del análisis granulométrico.');
+    const kind = input.kind;
+    if (!['fine', 'coarse'].includes(kind)) throw new Error('Seleccione agregado fino o grueso.');
+    const profileId = input.profileId == null ? 'none' : input.profileId;
+    const profile = profiles.find(p => p.id === profileId);
+    if (!profile) throw new Error('Perfil granulométrico desconocido.');
+    if (profile.kind !== 'any' && profile.kind !== kind) throw new Error('La envolvente seleccionada no corresponde al tipo de agregado.');
+    const sieves = checkedSieves(input.sieves === undefined ? defaultSieves[kind] : input.sieves);
+    const initial = number(input.initial, 'Masa seca inicial');
+    if (initial <= 0) throw new Error('La masa seca inicial debe ser mayor que cero.');
+    if (!Array.isArray(input.masses) || input.masses.length !== sieves.length) throw new Error('Ingrese una masa por cada tamiz y para el fondo.');
+    const masses = input.masses.map((mass, i) => {
+      number(mass, 'Masa retenida en ' + sieveLabel(sieves[i]));
+      if (mass < 0) throw new Error('Las masas retenidas no pueden ser negativas.');
+      return mass;
+    });
+    const total = masses.reduce((a, b) => a + b, 0);
+    if (!Number.isFinite(total) || total <= 0) throw new Error('La suma de masas debe ser finita y mayor que cero.');
+    const difference = total - initial;
+    const differencePercent = difference / initial * 100;
+    const balanceOK = Math.abs(differencePercent) <= .3 + EPS;
+    let cumulativeMass = 0;
+    const rows = sieves.map((sieve, i) => {
+      cumulativeMass += masses[i];
+      const retained = masses[i] / initial * 100;
+      const cumulative = cumulativeMass / initial * 100;
+      return {sieve, mass: masses[i], retained, cumulative, passing: 100 - cumulative};
+    });
+    if (rows.some(r => !Number.isFinite(r.retained) || !Number.isFinite(r.cumulative))) throw new Error('Las magnitudes exceden el rango numérico; revise las unidades de masa.');
+    const rowFor = sieve => rows.find(r => r.sieve === sieve);
+    const warnings = [];
+    if (!balanceOK) warnings.push('La diferencia de masas supera 0,3 % de la masa seca inicial (NTE INEN 696:2011, 5.4.7). El resultado no se evalúa para aceptación granulométrica; revise o repita el ensayo.');
+    if (Math.abs(differencePercent) > EPS) warnings.push('Los porcentajes usan la masa seca inicial. La diferencia de masas no se oculta renormalizando al total recuperado; el residual del fondo refleja ese desfase.');
+    const missingFM = kind === 'fine' ? fineSeries.filter(sieve => !rowFor(sieve)) : [];
+    let fm = null, fmComplete = kind !== 'fine';
+    if (kind === 'fine' && !missingFM.length) {
+      fm = rows.filter(row => fmSeries.includes(row.sieve)).reduce((sum, row) => sum + row.cumulative, 0) / 100;
+      const highest = rows[0];
+      // If material is retained by the highest sieve, larger standard sieves
+      // might contribute to FM. Do not silently assume those contributions zero.
+      const missingUpper = fmSeries.filter(sieve => sieve > 9.5 && !rowFor(sieve) &&
+        ((sieve > highest.sieve && highest.mass > 0) || sieve < highest.sieve));
+      fmComplete = !missingUpper.length;
+      if (!fmComplete) warnings.push('MF parcial: faltan tamices de la serie superior (' + missingUpper.map(sieveLabel).join(', ') + ') y no se ha demostrado que su retenido sea cero. No transfiera este MF al diseño.');
+    } else if (kind === 'fine') {
+      warnings.push('MF no calculable: faltan tamices de la serie (' + missingFM.map(sieveLabel).join(', ') + '). No se interpolan retenidos faltantes.');
+    }
+    const selectedLimits = profileId === 'custom' ? checkedLimits(input.customLimits, sieves) : profile.limits.map(item => ({...item}));
+    const violations = [];
+    let incomplete = false;
+    for (const limit of selectedLimits) {
+      const row = rowFor(limit.sieve);
+      if (!row) {
+        incomplete = true;
+        warnings.push('No se puede evaluar el límite del tamiz ' + sieveLabel(limit.sieve) + ': falta la medición.');
+      } else if (row.passing < limit.min - EPS || row.passing > limit.max + EPS) {
+        violations.push({...limit, actual: row.passing, type: 'passing', message: sieveLabel(limit.sieve) + ': pasa ' + row.passing.toFixed(2) + ' %; intervalo seleccionado ' + limit.min + '–' + limit.max + ' %.'});
+      }
+    }
+    if (profile.fmLimits) {
+      if (fm === null || !fmComplete) incomplete = true;
+      else if (fm < profile.fmLimits.min - EPS || fm > profile.fmLimits.max + EPS) {
+        violations.push({sieve: null, actual: fm, ...profile.fmLimits, type: 'fm', message: 'MF = ' + fm.toFixed(3) + '; intervalo de referencia 2,3–3,1.'});
+      }
+    }
+    if (profile.maxBetween) {
+      for (let i = 1; i < fineSeries.length; i++) {
+        const upper = rowFor(fineSeries[i - 1]), lower = rowFor(fineSeries[i]);
+        if (!upper || !lower) { incomplete = true; continue; }
+        const fraction = upper.passing - lower.passing;
+        if (fraction > profile.maxBetween + EPS) violations.push({sieve: lower.sieve, upperSieve: upper.sieve, actual: fraction, min: 0, max: profile.maxBetween, type: 'between', message: 'Entre ' + sieveLabel(upper.sieve) + ' y ' + sieveLabel(lower.sieve) + ' queda ' + fraction.toFixed(2) + ' %; máximo de referencia 45 %.'});
+      }
+    }
+    warnings.push(...profile.notes);
+    warnings.push('El tamizado seco no acredita el contenido de material menor que 75 µm. Para ese requisito se necesita el ensayo por lavado (NTE INEN 697 / ASTM C117) y su criterio aplicable.');
+    warnings.push('Estar dentro de una envolvente solo describe los criterios comparados. No acredita calidad integral del agregado, muestreo, ejecución del ensayo ni aceptación de la mezcla de hormigón.');
+    const gradingStatus = !selectedLimits.length || !balanceOK || incomplete ? 'not-evaluated' : violations.length ? 'outside' : 'within';
+    return {kind, profileId, initial, rows, total, difference, differencePercent, balanceOK, balanceTolerancePercent: .3,
+      fm, fmComplete, gradingStatus, violations, warnings, source: profile.source, edition: profile.edition,
+      referenceUrl: profile.referenceUrl || '', methodSource: 'NTE INEN 696:2011, 5.4.7 y 5.5 (copia del documento INEN en anexo WWF)', methodUrl,
+      limits: selectedLimits, revisionUrl, normativeAcceptance: false};
+  }
+
+  return freezeDeep({profiles, defaultSieves, analyze});
+}));
+</script><script>(function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory(require('./engine.js'));else root.HormigonProject=factory(root.Hormigon);})(typeof globalThis!=='undefined'?globalThis:this,function(E){
+'use strict';
+const copy=v=>JSON.parse(JSON.stringify(v));
+const coarseSieves=[37.5,25,19,12.5,9.5,4.75,2.36,0];
+function defaultGrading(){return {kind:'fine',fine:{profileId:'none',customLimits:[]},coarse:{profileId:'none',customLimits:[],initial:null,sieves:[...coarseSieves],masses:coarseSieves.map(()=>null)}};}
+function finiteOrNull(n){return n===null||typeof n==='number'&&Number.isFinite(n);}
+function grading(input){const g=defaultGrading();if(!input)return g;if(typeof input!=='object'||Array.isArray(input))throw new Error('Registro granulométrico inválido.');g.kind=input.kind==='coarse'?'coarse':'fine';for(const kind of ['fine','coarse']){const s=input[kind];if(!s)continue;if(typeof s.profileId==='string'&&s.profileId.length<100)g[kind].profileId=s.profileId; if(s.customLimits!==undefined){if(!Array.isArray(s.customLimits)||s.customLimits.length>30)throw new Error('Límites granulométricos inválidos.');g[kind].customLimits=s.customLimits.map(l=>{if(!l||![l.sieve,l.min,l.max].every(finiteOrNull))throw new Error('Límite granulométrico inválido.');return {sieve:l.sieve,min:l.min,max:l.max};});}if(kind==='coarse'){if(!Array.isArray(s.sieves)||!Array.isArray(s.masses)||s.sieves.length!==s.masses.length||s.sieves.length<2||s.sieves.length>30||!s.sieves.every(v=>typeof v==='number'&&Number.isFinite(v))||!s.masses.every(finiteOrNull)||!finiteOrNull(s.initial))throw new Error('Masas o tamices de grava inválidos.');g.coarse.sieves=s.sieves.slice();g.coarse.masses=s.masses.slice();g.coarse.initial=s.initial;}}return g;}
+function parse(obj){if(!obj||![1,2].includes(obj.schemaVersion)||!obj.data||typeof obj.data!=='object'||Array.isArray(obj.data))throw new Error('Archivo incompatible. Importa un proyecto JSON de HormigónLab.');const supplied=obj.data, real=supplied.dataMode==='real', clean=real&&E.createRealDesign?E.createRealDesign():copy(E.defaults);
+for(const [k,def] of Object.entries(E.defaults)){if(!Object.prototype.hasOwnProperty.call(supplied,k))continue;const v=supplied[k];if(Array.isArray(def)){if(!Array.isArray(v)||v.length!==def.length||!v.every(finiteOrNull))throw new Error('Lista de números inválida: '+k);clean[k]=v.slice();}else if(typeof def==='number'||def===null){if(!finiteOrNull(v))throw new Error('Dato numérico inválido: '+k);clean[k]=v;}else if(typeof v!==typeof def)throw new Error('Tipo de dato inválido: '+k);else if(typeof v==='string'&&v.length>20000)throw new Error('Texto demasiado largo: '+k);else clean[k]=v;}
+if(!['demo','real'].includes(clean.dataMode))throw new Error('Origen de datos desconocido.');
+if(obj.schemaVersion===1&&!supplied.dataMode){clean.dataMode='demo';clean.experimentalRecorded=false;}
+if(typeof clean.reference==='string'&&/edición de la guía pendiente|esperando la guía del curso/i.test(clean.reference))clean.reference='Volumen absoluto · referencias históricas ACI 211';
+const statsText=obj.statsText===undefined?'':obj.statsText;if(typeof statsText!=='string'||statsText.length>100000)throw new Error('Historial de ensayos inválido.');
+return {data:clean,statsText,gradingState:grading(obj.gradingState)};
+}
+function pack(data,extra={}){const valid=parse({schemaVersion:2,data,statsText:extra.statsText||'',gradingState:extra.gradingState});return {schemaVersion:2,engineVersion:'1.1.0',exportedAt:extra.exportedAt||new Date().toISOString(),...valid};}
+function saveVersion(projects,record,meta={}){if(!Array.isArray(projects))throw new Error('Biblioteca inválida.');if(projects.length>=100)throw new Error('Límite de 100 versiones. Exporta un respaldo antes de eliminar alguna.');const payload=pack(record.data,record);const id=meta.id||Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,9);if(projects.some(p=>p.id===id))throw new Error('Identificador de versión repetido.');return [{id,date:meta.date||new Date().toLocaleString('es-EC'),...payload},...copy(projects)];}
+return {parse,pack,saveVersion,defaultGrading,coarseSieves};
+});
+</script><script>(function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory(require('./engine.js'));else root.HormigonCompare=factory(root.Hormigon);})(typeof globalThis!=='undefined'?globalThis:this,function(E){
+  'use strict';
+  const metrics=[
+    ['Resistencia especificada','MPa',d=>d.fc],
+    ['Resistencia media requerida','MPa',(_,r)=>r.strength.value],
+    ['Cemento','kg/m³',(_,r)=>r.cement],
+    ['Agua efectiva','kg/m³',(_,r)=>r.water],
+    ['Agua a añadir','kg/m³',(_,r)=>r.addedWater],
+    ['Arena húmeda','kg/m³',(_,r)=>r.fine.wet],
+    ['Grava húmeda','kg/m³',(_,r)=>r.coarse.wet],
+    ['Aditivo','kg/m³',(_,r)=>r.admixture],
+    ['Relación a/c efectiva','kg/kg',(_,r)=>r.actualWC],
+    ['Costo de materiales','USD/m³',(_,r)=>r.cost],
+    ['Masa teórica','kg/m³',(_,r)=>r.totalMass],
+    ['Volumen absoluto','m³/m³',(_,r)=>r.totalVolume]
+  ];
+  function scenario(fc){if(![21,28,35].includes(fc))throw new Error('Escenario desconocido.');return {...E.defaults,sieves:[...E.defaults.sieves],fc,name:'Demostración · '+fc+' MPa'};}
+  function compare(a,b){
+    const left=E.calculate(a),right=E.calculate(b);
+    return {left,right,rows:metrics.map(([label,unit,get])=>{const av=left.ok?get(a,left):null,bv=right.ok?get(b,right):null;return {label,unit,a:av,b:bv,delta:av===null||bv===null?null:bv-av};})};
+  }
+  return {scenario,compare};
+});
+</script><script>/* HormigónLab — memoria y exportaciones. No recalcula la dosificación.
+ * API UMD: steps(data,result) -> [{title,equation,variables,inputs,substitution,
+ * result,unit,reference}], todos strings; renderSteps y buildBody usan esa lista.
+ * buildBody acepta {statsText,generatedAt,version,experimental,grading}.
+ * exportCSV conserva los números IEEE-754 del motor mediante String(number).
+ */
+(function(root,factory){
+  if(typeof module==='object'&&module.exports) module.exports=factory(require('./engine.js'));
+  else root.HormigonReport=factory(root.Hormigon);
+})(typeof globalThis!=='undefined'?globalThis:this,function(E){
+  'use strict';
+  const escapeHTML=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const fmt=(v,n=6)=>Number.isFinite(v)?v.toLocaleString('es-EC',{minimumFractionDigits:n,maximumFractionDigits:n}):'No ingresado';
+  const given=v=>v===null||v===undefined||v===''?'No ingresado':typeof v==='number'?fmt(v):typeof v==='boolean'?(v?'Sí':'No'):String(v);
+  const assertResult=r=>{if(!r||!r.ok)throw new Error('Corrige los datos del diseño antes de generar una memoria o exportar cantidades.');};
+  const refs={
+    tables:'UT Austin / TxDOT, ConcreteWorks, informe 5-4563-01-1 (2010), tablas históricas ACI 211; no se atribuyen a ACI 211.1-22.',
+    strength:'FHWA 1608, revisión 3-2026, página 6, tablas 1–3. Criterio en psi; no sustituye requisitos contractuales ecuatorianos.',
+    coarse:'VDOT, Manual of Instructions, Materials Division (2025), Appendix E, tabla de volumen de agregado grueso seco compactado.',
+    volume:'Método convencional de volúmenes absolutos, referencia histórica ACI 211. ρagua = 1000 kg/m³.',
+    moisture:'Balance de masa; FHWA 1638, Worksheet for Determining Concrete Batch Moisture/Absorption Corrections. H y Abs expresadas respecto a masa seca.',
+    project:'Criterio o dato declarado por el usuario; requiere sustento del proyecto y comprobación experimental.'
+  };
+  const sources=[
+    ['UT Austin / TxDOT · ConcreteWorks, informe 5-4563-01-1 (2010), tablas históricas','https://library.ctr.utexas.edu/ctr-publications/5-4563-01-1.pdf'],
+    ['FHWA 1608 · revisión 3-2026, página 6: resistencia media requerida y factores','https://highways.dot.gov/sites/fhwa.dot.gov/files/1608_v14.pdf'],
+    ['VDOT · Manual of Instructions, Materials Division (2025), Appendix E','https://www.vdot.virginia.gov/media/vdotvirginiagov/doing-business/technical-guidance-and-support/technical-guidance-documents/materials/bu-mat-MOI-IV_482-25_250804_acc.pdf'],
+    ['FHWA 1638 · correcciones de humedad y absorción','https://highways.dot.gov/media/43476'],
+    ['ACI PRC-211.1-22 · vista previa oficial, referencia de alcance, no origen atribuido de las tablas','https://www.concrete.org/Portals/0/Files/PDF/Previews/211.1-22_preview.pdf'],
+    ['MIDUVI · NEC-SE-HM, hormigón armado: requisitos ecuatorianos a contrastar para el proyecto','https://www.habitatyvivienda.gob.ec/wp-content/uploads/2023/03/8.-NEC-SE-HM-Hormigon-Armado.pdf'],
+    ['INEN · catálogo de normas oficializadas','https://www.normalizacion.gob.ec/normas-oficializadas/'],
+    ['ASTM · normas de cemento, áridos y hormigón','https://store.astm.org/products-services/standards-and-publications/standards/cement-standards-and-concrete-standards.html']
+  ];
+  function bracket(points,x){for(let i=1;i<points.length;i++)if(x<=points[i][0])return [points[i-1],points[i]];return [points.at(-2),points.at(-1)];}
+  function interpolationText(points,x){const [[x0,y0],[x1,y1]]=bracket(points,x);return `${fmt(y0)} + (${fmt(y1)} − ${fmt(y0)}) × (${fmt(x)} − ${fmt(x0)}) / (${fmt(x1)} − ${fmt(x0)})`;}
+  function steps(d,r){
+    assertResult(r);
+    const out=[], add=(title,equation,variables,inputs,substitution,result,unit,reference)=>out.push({title,equation,variables,inputs,substitution,result:String(result),unit,reference});
+    const fcPsi=d.fc/E.PSI, fcrPsi=r.strength.value/E.PSI;
+    add('Resistencia especificada y conversión','f′c [psi] = f′c [MPa] / q','f′c: resistencia especificada; q: MPa por psi.',`f′c = ${fmt(d.fc)} MPa; q = ${E.PSI} MPa/psi.`,`${fmt(d.fc)} / ${E.PSI}`,fmt(fcPsi),'psi','Conversión exacta de unidades; la entrada de resistencia se conserva en MPa.');
+    if(d.strengthMode==='history'){
+      const k=r.strength.factor, kp=[[15,1.16],[20,1.08],[25,1.03],[30,1]], ks=k*d.sd/E.PSI;
+      add('Factor de modificación del historial','k = interpolación(n); s′ = k × s','n: ensayos independientes; k: factor; s: desviación estándar muestral.',`n = ${given(d.n)}; s = ${fmt(d.sd)} MPa.`,(d.n>=30?'n ≥ 30 → k = 1':`k = ${interpolationText(kp,d.n)}`)+`; s′ = ${fmt(k)} × ${fmt(d.sd)} / ${E.PSI}`,`k = ${fmt(k)}; s′ = ${fmt(ks)}`,'k adimensional; s′ en psi',refs.strength);
+      const second=fcPsi<=5000?`${fmt(fcPsi)} + 2,33 × ${fmt(ks)} − 500`:`0,90 × ${fmt(fcPsi)} + 2,33 × ${fmt(ks)}`;
+      add('Resistencia media requerida con historial',r.strength.rule,'f′cr: resistencia media requerida; s′ = k × s; todos los términos de la regla están en psi.',`f′c = ${fmt(fcPsi)} psi; k = ${fmt(k)}; s′ = ${fmt(ks)} psi.`,`máx(${fmt(fcPsi)} + 1,34 × ${fmt(ks)}; ${second}) × ${E.PSI}`,fmt(r.strength.value),'MPa',refs.strength);
+    }else if(d.strengthMode==='manual'){
+      add('Resistencia media requerida manual','f′cr = f′cr manual','f′cr: resistencia media requerida suministrada por el usuario.',`f′cr manual = ${fmt(d.fcrManual)} MPa.`,`${fmt(d.fcrManual)} MPa`,fmt(r.strength.value),'MPa',refs.project);
+    }else{
+      const delta=fcPsi<3000?1000:fcPsi<=5000?1200:700;
+      const condition=fcPsi<3000?'f′c < 3000 psi':fcPsi<=5000?'3000 ≤ f′c ≤ 5000 psi':'f′c > 5000 psi';
+      add('Resistencia media requerida sin historial',r.strength.rule,'f′cr: resistencia media requerida para predosificar; f′c: especificada. El margen cubre variabilidad asumida y no es resistencia medida.',`${condition}; f′c = ${fmt(fcPsi)} psi.`,`${fcPsi>5000?'1,10 × ':''}${fmt(d.fc)} + ${delta} × ${E.PSI}`,fmt(r.strength.value),'MPa',refs.strength);
+    }
+    const waterUnit=d.waterMode==='table'?'lb/yd³':'kg/m³';
+    const baseInput=d.waterMode==='table'?E.waterTable[d.entrained?'air':'plain'][Number(d.slumpBand)][E.sizes.indexOf(d.size)]:d.waterManual;
+    add('Agua base','W₀ = valor de tabla × conversión, o valor manual','W₀: agua efectiva antes de la reducción; TMN: tamaño máximo nominal.',`TMN = ${given(d.size)} mm; intervalo = ${['1–2 in (25,4–50,8 mm)','3–4 in (76,2–101,6 mm)','6–7 in (152,4–177,8 mm)'][Number(d.slumpBand)]}; aire incorporado: ${d.entrained?'sí':'no'}; origen: ${d.waterMode==='table'?'tabla histórica':'manual'}.`,`${fmt(baseInput)} ${waterUnit}${d.waterMode==='table'?` × ${E.PCY} kg/m³ por lb/yd³`:''}`,fmt(r.baseWater),'kg/m³',d.waterMode==='table'?refs.tables:refs.project);
+    add('Agua efectiva de diseño','W = W₀ × (1 − R / 100)','W: agua efectiva, excluye agua absorbida por áridos; R: reducción declarada.',`W₀ = ${fmt(r.baseWater)} kg/m³; R = ${fmt(d.reduction)} %.`,`${fmt(r.baseWater)} × (1 − ${fmt(d.reduction)} / 100)`,fmt(r.water),'kg/m³',d.reduction>0?refs.project:refs.volume);
+    const wcPoints=d.entrained?[[2000,.74],[3000,.59],[4000,.48],[5000,.40]]:[[2000,.82],[3000,.68],[4000,.57],[5000,.48],[6000,.41]];
+    add('Relación agua/cemento por resistencia',d.wcMode==='table'?'y = y₀ + (y₁ − y₀) × (x − x₀) / (x₁ − x₀)':'(a/c)res = valor manual','x: f′cr en psi; y: relación a/c por masa. Los puntos son los dos valores tabulados adyacentes.',`f′cr = ${fmt(r.strength.value)} MPa = ${fmt(fcrPsi)} psi; origen: ${d.wcMode==='table'?'interpolación lineal sin extrapolar':'manual'}.`,d.wcMode==='table'?interpolationText(wcPoints,fcrPsi):fmt(d.wcManual),fmt(r.wcStrength,9),'kg de agua/kg de cemento',d.wcMode==='table'?refs.tables:refs.project);
+    add('Relación a/c seleccionada','(a/c)sel = mín((a/c)res, (a/c)máx) si existe límite','(a/c)res: relación por resistencia; (a/c)máx: restricción ingresada por exposición o especificación.',`(a/c)res = ${fmt(r.wcStrength,9)}; límite = ${d.maxWC>0?fmt(d.maxWC,9):'no declarado'}.`,d.maxWC>0?`mín(${fmt(r.wcStrength,9)}; ${fmt(d.maxWC,9)})`:`Sin límite declarado → ${fmt(r.wcStrength,9)}`,fmt(r.selectedWC,9),'adimensional',refs.project);
+    add('Contenido de cemento','C = máx(W / (a/c)sel, Cmín)','C: masa de cemento; Cmín: contenido mínimo declarado. El máximo, si existe, se comprueba sin recortar C.',`W = ${fmt(r.water)} kg/m³; (a/c)sel = ${fmt(r.selectedWC,9)}; Cmín = ${fmt(d.minCement)} kg/m³.`,`máx(${fmt(r.water)} / ${fmt(r.selectedWC,9)}; ${fmt(d.minCement)})`,fmt(r.cement),'kg/m³',refs.volume);
+    add('Relación a/c efectiva','(a/c)ef = W / C','La relación efectiva puede ser menor a la seleccionada cuando controla el mínimo de cemento.',`W = ${fmt(r.water)} kg/m³; C = ${fmt(r.cement)} kg/m³.`,`${fmt(r.water)} / ${fmt(r.cement)}`,fmt(r.actualWC,9),'kg/kg',refs.volume);
+    for(const [key,label] of [['fine','Arena'],['coarse','Grava']]){
+      const isDry=d[key+'SGBasis']==='dry'||d[key+'SGBasis']==='od', sg=r[key+'SGSSD']??d[key+'SG'];
+      add(`Densidad relativa SSS · ${label}`,isDry?'GSSS = Gseca × (1 + Abs / 100)':'GSSS = G ingresada en condición SSS','G: densidad relativa bulk del árido (adimensional); Abs: absorción en % de masa seca. No es masa unitaria ni densidad aparente de partículas.',`G ingresada = ${fmt(d[key+'SG'])}; base = ${isDry?'seca':'SSS'}; Abs = ${fmt(d[key+'Abs'])} %.`,isDry?`${fmt(d[key+'SG'])} × (1 + ${fmt(d[key+'Abs'])} / 100)`:fmt(d[key+'SG']),fmt(sg),'adimensional',`NTE INEN ${key==='fine'?'856':'857'} / ASTM ${key==='fine'?'C128':'C127'}: caracterización; ecuación de conversión por conservación del volumen bulk.`);
+    }
+    const coarsePoints=[2.4,2.6,2.8,3].map((v,i)=>[v,E.coarseTable[E.sizes.indexOf(d.size)][i]]);
+    add('Fracción de grava seca compactada',d.coarseMode==='table'?'b = interpolación lineal por MF':'b = valor manual','b: volumen aparente seco compactado de grava por m³ de mezcla, distinto de su volumen absoluto; MF: módulo de finura de la arena.',`TMN = ${fmt(d.size)} mm; MF = ${fmt(d.fm)}.`,d.coarseMode==='table'?interpolationText(coarsePoints,d.fm):fmt(d.coarseManual),fmt(r.coarseFraction),'m³ compactados/m³ de mezcla',d.coarseMode==='table'?refs.coarse:refs.project);
+    add('Masa de grava seca y SSS','Mg,seca = b × ρcompactada; Mg,SSS = Mg,seca × (1 + Absg / 100)','ρcompactada: masa unitaria seca compactada; Absg: absorción de grava.',`b = ${fmt(r.coarseFraction)}; ρcompactada = ${fmt(d.rodded)} kg/m³; Absg = ${fmt(d.coarseAbs)} %.`,`${fmt(r.coarseFraction)} × ${fmt(d.rodded)} = ${fmt(r.coarse.dry)}; ${fmt(r.coarse.dry)} × (1 + ${fmt(d.coarseAbs)} / 100)`,`seca = ${fmt(r.coarse.dry)}; SSS = ${fmt(r.coarse.ssd)}`,'kg/m³',refs.coarse);
+    add('Aditivo y su agua','Mad = C × dosis / 100; Wad = Mad × fracciónagua / 100','Mad: masa de producto líquido; Wad: agua contenida en ese producto.',`C = ${fmt(r.cement)}; dosis = ${fmt(d.admDose)} % de cemento; agua en producto = ${fmt(d.admWater)} %.`,d.admDose===0?'Dosis cero → producto = 0; agua de aditivo = 0':`${fmt(r.cement)} × ${fmt(d.admDose)} / 100 = ${fmt(r.admixture)}; ${fmt(r.admixture)} × ${fmt(d.admWater)} / 100`,`producto = ${fmt(r.admixture)}; agua = ${fmt(r.admixtureWater)}`,'kg/m³','Balance de masa con datos de ficha técnica del aditivo; no se supone una reducción de agua automática.');
+    const gs=r.coarseSGSSD??d.coarseSG, fs=r.fineSGSSD??d.fineSG;
+    const volumeItems=[
+      ['cement','Cemento','Vc = C / (Gc × ρagua)',`${fmt(r.cement)} / (${fmt(d.cementSG)} × 1000)`],
+      ['water','Agua efectiva','Vw = W / ρagua',`${fmt(r.water)} / 1000`],
+      ['coarse','Grava SSS','Vg = Mg,SSS / (Gg,SSS × ρagua)',`${fmt(r.coarse.ssd)} / (${fmt(gs)} × 1000)`],
+      ['air','Aire','Vaire = aire (%) / 100',`${fmt(d.air)} / 100`],
+      ['admixture','Volumen residual del aditivo','Vad,neto = Mad / ρad − Wad / ρagua',d.admDose===0?'Sin aditivo → 0':`${fmt(r.admixture)} / ${fmt(d.admDensity)} − ${fmt(r.admixtureWater)} / 1000`]
+    ];
+    for(const [key,name,equation,sub] of volumeItems)add(`Volumen absoluto · ${name}`,equation,'V: volumen por m³ de hormigón; G: densidad relativa; ρ: densidad en kg/m³. El agua del aditivo ya está contenida en W.',`ρagua = 1000 kg/m³${key==='admixture'?`; ρad = ${fmt(d.admDensity)} kg/m³`:''}.`,sub,fmt(r.volumes[key],9),'m³/m³',refs.volume);
+    add('Volumen y masa SSS de arena','Va = 1 − (Vc + Vw + Vg + Vaire + Vad,neto); Ma,SSS = Va × Ga,SSS × ρagua','La arena completa el volumen objetivo de 1 m³.',`Ga,SSS = ${fmt(fs)}; ρagua = 1000 kg/m³.`,`1 − (${['cement','water','coarse','air','admixture'].map(k=>fmt(r.volumes[k],9)).join(' + ')}) = ${fmt(r.volumes.fine,9)}; ${fmt(r.volumes.fine,9)} × ${fmt(fs)} × 1000`,`Va = ${fmt(r.volumes.fine,9)} m³; Ma,SSS = ${fmt(r.fine.ssd)} kg`,'por 1 m³ de mezcla',refs.volume);
+    for(const [key,name] of [['fine','Arena'],['coarse','Grava']]){
+      const a=r[key];
+      add(`Corrección de humedad · ${name}`,'Mseca = MSSS / (1 + Abs / 100); Mhúmeda = Mseca × (1 + H / 100); Wlibre = Mhúmeda − MSSS','H: humedad total; Abs: absorción; ambas en % de masa seca. Si H < Abs, Wlibre es negativa y representa déficit para alcanzar SSS.',`MSSS = ${fmt(a.ssd)} kg; Abs = ${fmt(d[key+'Abs'])} %; H = ${fmt(d[key+'Moist'])} %.`,`${fmt(a.ssd)} / (1 + ${fmt(d[key+'Abs'])} / 100) = ${fmt(a.dry)}; ${fmt(a.dry)} × (1 + ${fmt(d[key+'Moist'])} / 100) = ${fmt(a.wet)}; ${fmt(a.wet)} − ${fmt(a.ssd)}`,`Mseca = ${fmt(a.dry)}; Mhúmeda = ${fmt(a.wet)}; Wlibre = ${fmt(a.free)}`,'kg/m³',refs.moisture);
+    }
+    add('Agua que se debe añadir','Wañadir = W − Wlibre,arena − Wlibre,grava − Wad','W: agua efectiva de diseño; Wlibre: aporte neto o déficit de cada árido; Wad: agua del aditivo.',`W = ${fmt(r.water)}; Wlibre,arena = ${fmt(r.fine.free)}; Wlibre,grava = ${fmt(r.coarse.free)}; Wad = ${fmt(r.admixtureWater)} kg/m³.`,`${fmt(r.water)} − (${fmt(r.fine.free)}) − (${fmt(r.coarse.free)}) − ${fmt(r.admixtureWater)}`,fmt(r.addedWater),'kg/m³ ≈ L/m³ con ρagua = 1000',refs.moisture);
+    const wr=r.rows.find(x=>x.key==='water');
+    if(wr)add('Escenarios de agua de amasado','Wañadir,secos = W + Σ(MSSS − Mseca) − Wad; Wañadir,SSS = W − Wad','Son alternativas de agua a añadir según condición de los áridos, no estados secos o húmedos del agua.',`Absorción arena = ${fmt(r.fine.ssd-r.fine.dry)}; absorción grava = ${fmt(r.coarse.ssd-r.coarse.dry)} kg/m³.`,`${fmt(r.water)} + ${fmt(r.fine.ssd-r.fine.dry)} + ${fmt(r.coarse.ssd-r.coarse.dry)} − ${fmt(r.admixtureWater)}; ${fmt(r.water)} − ${fmt(r.admixtureWater)}`,`con áridos secos = ${fmt(wr.dry)}; con áridos SSS = ${fmt(wr.ssd)}; con humedad ingresada = ${fmt(wr.wet)}`,'kg/m³ de agua a añadir',refs.moisture);
+    add('Comprobaciones de conservación','ΣV = 1; Wreconstruida = Wañadir + Wlibre,arena + Wlibre,grava + Wad','El cierre verifica balances matemáticos, no demuestra resistencia, durabilidad ni trabajabilidad.',`Volúmenes calculados por el motor; agua efectiva = ${fmt(r.water)} kg/m³.`,`${Object.values(r.volumes).map(v=>fmt(v,9)).join(' + ')}; ${fmt(r.addedWater)} + (${fmt(r.fine.free)}) + (${fmt(r.coarse.free)}) + ${fmt(r.admixtureWater)}`,`ΣV = ${fmt(r.totalVolume,9)} m³; Wreconstruida = ${fmt(r.addedWater+r.fine.free+r.coarse.free+r.admixtureWater)} kg/m³`,'m³ y kg/m³',refs.volume);
+    add('Masa total teórica','Mtotal = C + Ma,húmeda + Mg,húmeda + Wañadir + Mad','La masa de 1 m³ teórico equivale a su densidad teórica; la densidad fresca se mide por ensayo.',`Materiales realmente dosificados con la humedad ingresada.`,`${fmt(r.cement)} + ${fmt(r.fine.wet)} + ${fmt(r.coarse.wet)} + ${fmt(r.addedWater)} + ${fmt(r.admixture)}`,fmt(r.totalMass),'kg/m³','Conservación de masa; el rendimiento real exige densidad medida y masa realmente dosificada.');
+    add('Proporciones SSS y sacos equivalentes','C : Ma,SSS : Mg,SSS = 1 : (Ma,SSS / C) : (Mg,SSS / C); sacos = C / msaco','Proporciones por masa, no por volumen de baldes; msaco: masa declarada por saco.',`msaco = ${fmt(d.bag)} kg.`,`${fmt(r.fine.ssd)} / ${fmt(r.cement)}; ${fmt(r.coarse.ssd)} / ${fmt(r.cement)}; ${fmt(r.cement)} / ${fmt(d.bag)}`,`1 : ${fmt(r.ratio[1])} : ${fmt(r.ratio[2])}; a/c = ${fmt(r.actualWC)}; sacos = ${fmt(r.cement/d.bag)}`,'adimensional; sacos/m³',refs.volume);
+    add('Volumen de producción y mezcladas','Vtotal = Vneto × (1 + reserva / 100); N = techo(Vtotal / (capacidadL / 1000)); Vmezclada = Vtotal / N','La reserva se aplica una sola vez; todas las mezcladas tienen igual volumen y respetan la capacidad útil.',`Vneto = ${fmt(d.volume)} m³; reserva = ${fmt(d.waste)} %; capacidad = ${fmt(d.mixer)} L.`,`${fmt(d.volume)} × (1 + ${fmt(d.waste)} / 100) = ${fmt(r.batchVolume)}; techo(${fmt(r.batchVolume)} / (${fmt(d.mixer)} / 1000)) = ${r.batches}; ${fmt(r.batchVolume)} / ${r.batches}`,`Vtotal = ${fmt(r.batchVolume)} m³; N = ${r.batches}; Vmezclada = ${fmt(r.perBatch,9)} m³`,'m³ y unidades','Escalado de la dosificación teórica; requiere comprobar capacidad útil y pérdidas reales.');
+    add('Cantidades de lote y costo de materiales','Mi,lote = Mi,por m³ × Vtotal; Mi,mezclada = Mi,por m³ × Vmezclada; costo = Σ(Mi,por m³ × precioki)','Mi: cantidad de cada material en condición de pesaje; precio en USD/kg. No incluye transporte, mano de obra ni equipos.',r.rows.map(x=>`${x.name}: ${fmt(x.wet)} kg/m³; ${fmt(x.price)} USD/kg`).join('; '),r.rows.map(x=>`${fmt(x.wet)} × ${fmt(x.price)}`).join(' + '),`costo/m³ = ${fmt(r.cost)}; costo lote = ${fmt(r.cost*r.batchVolume)}`,'USD','Precios declarados por el usuario; estimación aritmética de materiales.');
+    return out;
+  }
+  function renderSteps(d,r){return steps(d,r).map((s,i)=>`<div class="calculation"><h3><span class="section-number">${String(i+1).padStart(2,'0')}</span>${escapeHTML(s.title)}</h3><div class="formula"><strong>Ecuación:</strong> ${escapeHTML(s.equation)}</div><p><strong>Variables:</strong> ${escapeHTML(s.variables)}</p><p><strong>Datos:</strong> ${escapeHTML(s.inputs)}</p><code><strong>Sustitución:</strong> ${escapeHTML(s.substitution)}</code><p><strong>Resultado:</strong> ${escapeHTML(s.result)} <span class="muted">${escapeHTML(s.unit)}</span></p><p class="tiny muted"><strong>Referencia:</strong> ${escapeHTML(s.reference)}</p></div>`).join('');}
+  function table(headers,rows){return `<div class="table-scroll"><table><thead><tr>${headers.map(x=>`<th>${escapeHTML(x)}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>`<tr>${row.map(x=>`<td>${escapeHTML(x)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;}
+  function mixTable(d,r){
+    assertResult(r);
+    return table(['Árido','Masa seca (kg/m³)','Masa SSS (kg/m³)','Masa húmeda a pesar (kg/m³)'],[['Arena',fmt(r.fine.dry,3),fmt(r.fine.ssd,3),fmt(r.fine.wet,3)],['Grava',fmt(r.coarse.dry,3),fmt(r.coarse.ssd,3),fmt(r.coarse.wet,3)]])+table(['Material / parámetro','Cantidad por m³','Unidad'],[['Cemento',fmt(r.cement,3),'kg'],['Agua efectiva de diseño',fmt(r.water,3),'kg'],['Agua que se debe añadir',fmt(r.addedWater,3),'kg ≈ L'],['Aditivo líquido, producto',fmt(r.admixture,3),'kg'],['Relación a/c efectiva',fmt(r.actualWC,9),'kg/kg'],['Masa total teórica',fmt(r.totalMass,3),'kg'],['Volumen absoluto total',fmt(r.totalVolume,9),'m³'],['Sacos equivalentes',fmt(r.cement/d.bag,6),`sacos de ${given(d.bag)} kg`]]);
+  }
+  function moistureTable(r){const w=r.rows.find(x=>x.key==='water');return table(['Condición de los áridos','Agua que se debe añadir (kg/m³)','Significado'],[['Secos al horno',fmt(w?.dry,6),'Incluye agua para satisfacer la absorción y descuenta agua del aditivo'],['Saturados superficialmente secos (SSS)',fmt(w?.ssd,6),'Agua efectiva menos agua contenida en el aditivo'],['Con humedades ingresadas',fmt(r.addedWater,6),'Descuenta aportes libres o suma déficits de humedad y descuenta agua del aditivo']]);}
+  function experimentalSection(d,r,options){
+    const enabled=d.dataMode==='real'&&d.experimentalRecorded===true;
+    if(!enabled)return '<p>No se incluyen resultados experimentales: no existe confirmación de ensayos reales ingresados. Los valores de demostración no constituyen evidencia de laboratorio.</p>';
+    const fields=[['trialVolume','Volumen nominal de prueba','m³'],['trialDensity','Densidad fresca declarada','kg/m³'],['trialSlump','Asentamiento medido','mm'],['trialAir','Aire medido','%'],['testLoad','Carga de rotura','kN'],['testDiameter','Diámetro medido del cilindro','mm'],['age','Edad de ensayo','días']];
+    const entered=fields.filter(([k])=>Number.isFinite(d[k]));
+    let html=entered.some(([k])=>d[k]<0)||(Number.isFinite(d.trialAir)&&d.trialAir>100)?'<p class="warning">Hay valores experimentales fuera de rango; revisa el registro. No constituyen resultados validados.</p>':'';html+=entered.length?table(['Dato experimental ingresado','Valor','Unidad'],entered.map(([k,label,unit])=>[label,fmt(d[k]),unit])):'<p>No se ingresaron valores experimentales numéricos.</p>';
+    if(Number.isFinite(d.testLoad)&&Number.isFinite(d.testDiameter)){try{const f=E.compression(d.testLoad,d.testDiameter);html+=`<p>Resultado individual de compresión: ${fmt(f,6)} MPa; f = (${fmt(d.testLoad)} × 1000) / (π × ${fmt(d.testDiameter)}² / 4). No es un criterio automático de aceptación de la mezcla.</p>`;}catch(e){html+='<p class="warning">Compresión sin calcular: '+escapeHTML(e.message)+'</p>';}}
+    if(Number.isFinite(d.trialVolume)&&Number.isFinite(d.trialDensity)){try{const t=E.trial(r,d.trialVolume,d.trialDensity);html+=`<p>Rendimiento estimado con masa teórica del lote: ${fmt(t.yieldVolume,9)} m³ = ${fmt(t.mass,6)} kg / ${fmt(d.trialDensity,6)} kg/m³. Rendimiento relativo: ${fmt(t.relative,9)}. Si hubo pérdidas o desvíos de pesaje, debe emplearse la masa efectivamente dosificada; no se cambia la predosificación.</p>`;}catch(e){html+='<p class="warning">Rendimiento sin calcular: '+escapeHTML(e.message)+'</p>';}}
+    if(typeof options.statsText==='string'&&options.statsText.trim())html+=`<p>Historial de resistencias declarado (MPa): ${escapeHTML(options.statsText)}. Los resultados deben representar ensayos independientes y condiciones comparables.</p>`;
+    return html+'<p>La identificación como dato real es una declaración del usuario, no una certificación del procedimiento de ensayo.</p>';
+  }
+  function gradingSection(g){
+    if(Array.isArray(g))return g.length?g.map(gradingSection).join(''):gradingSection(null);
+    if(!g||!Array.isArray(g.rows))return '<p>No se adjuntó una evaluación granulométrica a este informe. El módulo Laboratorio permite revisar el balance y los límites aplicables por separado.</p>';
+    const rows=g.rows.map(x=>[x.sieve===0?'Fondo':given(x.sieve),fmt(x.mass,3),fmt(x.retained,3),fmt(x.cumulative,3),fmt(x.passing,3)]);
+    return '<h3>'+escapeHTML(g.kind==='coarse'?'Agregado grueso':'Agregado fino')+'</h3><p>Fuente: '+escapeHTML(g.source||'Sin envolvente')+' · '+escapeHTML(g.edition||'')+'</p>'+table(['Tamiz (mm)','Retenido (g)','Retenido individual (%)','Acumulado (%)','Pasa (%)'],rows)+`<p>Balance de masas: ${fmt(g.difference,6)} g (${fmt(g.differencePercent,6)} %); masa recuperada: ${fmt(g.total,3)} g. ${Number.isFinite(g.fm)?'Módulo de finura: '+fmt(g.fm,6)+'. ':''}El balance de masas por sí solo no demuestra cumplimiento granulométrico.</p>`+'<p>Evaluación de la envolvente: '+escapeHTML({within:'dentro de los límites seleccionados',outside:'fuera de los límites seleccionados','not-evaluated':'no concluyente'}[g.gradingStatus]||'no evaluada')+'. No es aprobación normativa.</p>'+table(['Tamiz (mm)','Pasa mínimo (%)','Pasa máximo (%)'],(g.limits||[]).map(x=>[given(x.sieve),given(x.min),given(x.max)]))+'<ul>'+(g.violations||[]).map(x=>'<li>'+escapeHTML(x.message)+'</li>').join('')+'</ul>'+(g.referenceUrl?'<p><a href="'+escapeHTML(g.referenceUrl)+'">Documento de la envolvente</a></p>':'')+(Array.isArray(g.warnings)?`<ul>${g.warnings.map(w=>`<li>${escapeHTML(w)}</li>`).join('')}</ul>`:'');
+  }
+  function buildBody(d,r,options={}){
+    assertResult(r);
+    const mode=d.dataMode==='real'?'DATOS REALES DECLARADOS POR EL USUARIO':'DATOS DE DEMOSTRACIÓN — NO SON ENSAYOS REALES';
+    const materials=[['Cemento: tipo / fuente',given(d.cementType)+' / '+given(d.cementSource),''],['Densidad relativa del cemento',given(d.cementSG),'adimensional'],['Arena: G ingresada / base',given(d.fineSG)+' / '+(d.fineSGBasis||'SSS'),'adimensional'],['Arena: G SSS utilizada',fmt(r.fineSGSSD??d.fineSG),'adimensional'],['Arena: absorción / humedad total',given(d.fineAbs)+' / '+given(d.fineMoist),'% de masa seca'],['Grava: G ingresada / base',given(d.coarseSG)+' / '+(d.coarseSGBasis||'SSS'),'adimensional'],['Grava: G SSS utilizada',fmt(r.coarseSGSSD??d.coarseSG),'adimensional'],['Grava: absorción / humedad total',given(d.coarseAbs)+' / '+given(d.coarseMoist),'% de masa seca'],['Masa unitaria seca compactada de grava',given(d.rodded),'kg/m³'],['Módulo de finura de arena',given(d.fm),'adimensional'],['Agua: origen / características',given(d.waterSource)+' / '+({unknown:'Aptitud pendiente de comprobar',documented:'Con respaldo de aptitud declarado'}[d.waterQuality]||given(d.waterQuality)),''],['Aditivo: identificación',given(d.admName||d.admixtureName),''],['Aditivo: dosis / densidad / agua',given(d.admDose)+' / '+given(d.admDensity)+' / '+given(d.admWater),'% de C / kg/m³ / % de producto']];
+    const conditions=[['Resistencia especificada f′c',fmt(d.fc)+' MPa'],['Resistencia media requerida f′cr',fmt(r.strength.value)+' MPa'],['Aplicación',given(d.application)],['Asentamiento objetivo',given(d.targetSlump)+' mm'],['Tamaño máximo nominal',given(d.size)+' mm'],['Exposición declarada',given(d.exposure)],['Límite máximo a/c',d.maxWC>0?fmt(d.maxWC):'No declarado'],['Cemento mínimo / máximo',`${d.minCement>0?fmt(d.minCement):'No declarado'} / ${d.maxCement>0?fmt(d.maxCement):'No declarado'} kg/m³`],['Aire objetivo / incorporado',`${fmt(d.air)} % / ${d.entrained?'sí':'no'}`],['Reducción de agua ingresada',fmt(d.reduction)+' %']];
+    const waterBalance=r.addedWater+r.fine.free+r.coarse.free+r.admixtureWater;
+    const checks=[['Volumen absoluto total',fmt(r.totalVolume,9)+' m³','Cierre aritmético, objetivo 1 m³'],['Agua efectiva reconstruida',fmt(waterBalance,9)+' kg/m³','Añadida + libres de áridos + agua del aditivo'],['Residuo del balance hídrico',fmt(waterBalance-r.water,12)+' kg/m³','Esperado próximo a cero'],['Masa teórica',fmt(r.totalMass,6)+' kg/m³','No es densidad fresca ensayada'],['Relación a/c efectiva',fmt(r.actualWC,9),d.maxWC>0?(r.actualWC<=d.maxWC+1e-12?'No supera el límite ingresado':'Supera el límite ingresado'):'Límite de exposición sin declarar'],['Cemento máximo',d.maxCement>0?fmt(d.maxCement,3)+' kg/m³':'No declarado',d.maxCement>0?(r.cement<=d.maxCement+1e-9?'No supera la restricción ingresada':'Supera la restricción ingresada'):'Pendiente definir aplicabilidad']];
+    const expKeys=/^(trial|test|age$|lab|sieve|coarseSieve|experimentalRecorded$)/;
+    const inputs=Object.entries(d).filter(([k])=>!expKeys.test(k)).map(([k,v])=>[k,Array.isArray(v)?v.map(given).join('; '):given(v)]);
+    const warnings=Array.isArray(r.warnings)?r.warnings:[];
+    let conclusion=`Se obtiene una predosificación de ${fmt(r.cement,3)} kg de cemento y ${fmt(r.water,3)} kg de agua efectiva por m³, con relación a/c ${fmt(r.actualWC,6)}. Con las humedades declaradas se añaden ${fmt(r.addedWater,3)} kg de agua y se pesan ${fmt(r.fine.wet,3)} kg de arena y ${fmt(r.coarse.wet,3)} kg de grava.`;
+    if(r.cement>400)conclusion+=' El contenido de cemento es relativamente elevado como orientación práctica, no como incumplimiento normativo. Resulta del agua efectiva y de la relación a/c seleccionada. Pueden estudiarse escenarios con asentamiento compatible con la colocación, TMN compatible con geometría y armaduras, combinación de áridos, historial válido o aditivo comprobado; cualquier cambio exige nueva verificación experimental.';
+    if(d.maxCement>0&&r.cement>d.maxCement+1e-9)conclusion+=' La mezcla supera el contenido máximo de cemento ingresado y no satisface esa restricción.';
+    conclusion+=' El cierre matemático no aprueba la mezcla. La resistencia, trabajabilidad, aire, rendimiento y durabilidad deben comprobarse con los materiales y las condiciones reales del proyecto.';
+    return `<section class="report-cover"><p>UNIVERSIDAD TÉCNICA PARTICULAR DE LOJA · UTPL</p><h1>HormigónLab<br>Memoria de predosificación de hormigón</h1><h2>${escapeHTML(d.name||'Diseño sin nombre')}</h2><p><strong>Responsable:</strong> ${escapeHTML(d.author||'No indicado')}<br><strong>Universidad:</strong> ${escapeHTML(d.university||'Universidad Técnica Particular de Loja (UTPL)')}<br><strong>Carrera:</strong> Ingeniería Civil<br><strong>Asignatura:</strong> ${escapeHTML(d.course||'Diseño de Hormigones')}<br><strong>Docente:</strong> ${escapeHTML(d.teacher||'Ing. Agustín Ruiz')}<br><strong>Generado:</strong> ${escapeHTML(options.generatedAt||new Date().toISOString())}<br><strong>Versión:</strong> ${escapeHTML(options.version||'1.1.0')}</p><p class="warning"><strong>${mode}</strong><br>Predosificación académica de hormigón convencional de densidad normal, pendiente de validación experimental y de requisitos aplicables.</p></section>`+
+      `<h2>1. Objetivo del diseño</h2><p>${escapeHTML(d.objective||'Automatizar una predosificación verificable de hormigón convencional mediante caracterización de materiales, condiciones de diseño y correcciones de humedad, explicando el origen de cada cantidad.')}</p>`+
+      `<h2>2. Datos de entrada y condiciones de diseño</h2>${table(['Condición','Valor declarado / calculado'],conditions)}<p>Referencia declarada por el usuario: ${escapeHTML(d.reference||'No indicada')}. No se asignan automáticamente límites de durabilidad a partir de una descripción de exposición.</p>`+
+      `<h2>3. Propiedades de los materiales</h2>${table(['Propiedad','Valor','Unidad / base'],materials)}<p>Las densidades relativas son adimensionales. La masa unitaria incluye huecos entre partículas; la densidad relativa bulk y el estado SSS describen las partículas y su porosidad permeable. No se utiliza densidad aparente de partículas como sustituto de G bulk.</p>`+
+      `<h2>4. Metodología y alcance</h2><p>Se aplica el método de volúmenes absolutos con tablas históricas ACI 211 reproducidas en las fuentes citadas. Se calcula f′cr, se seleccionan agua y relación a/c, se determina cemento y grava, y se obtiene arena por diferencia hasta completar 1 m³. Se corrigen humedad y absorción sin modificar el agua efectiva. La densidad adoptada para el agua es 1000 kg/m³. El aditivo líquido se caracteriza por masa, densidad y fracción de agua para evitar doble contabilización.</p><p>La herramienta no declara implementación íntegra ni conformidad con ACI 211.1-22. Los límites de exposición y cemento son entradas explícitas. No incluye hormigones ligeros, autocompactantes, masivos, múltiples materiales cementantes ni aceptación estructural o estadística completa.</p>`+
+      `<h2>5. Memoria de cálculo paso a paso</h2>${renderSteps(d,r)}`+
+      `<h2>6. Correcciones de humedad y balance hídrico</h2><p>La masa seca excluye toda humedad evaporable; SSS incluye agua absorbida y carece de agua superficial; la masa húmeda corresponde al estado de pesaje ingresado. Si H &lt; Abs, el árido resta agua efectiva y hay que añadir el déficit; si H = Abs no aporta agua libre; si H &gt; Abs aporta agua libre.</p>${moistureTable(r)}<p>Agua libre de arena: ${fmt(r.fine.free,6)} kg/m³; grava: ${fmt(r.coarse.free,6)} kg/m³; agua del aditivo: ${fmt(r.admixtureWater,6)} kg/m³. El balance reconstruye ${fmt(waterBalance,6)} kg/m³ de agua efectiva. Las tres filas anteriores son escenarios de pesaje alternativos, no tres estados del agua.</p>`+
+      `<h2>7. Dosificación final por m³ y proporciones</h2>${mixTable(d,r)}<p>Proporción SSS por masa, cemento : arena : grava = 1 : ${fmt(r.ratio[1],6)} : ${fmt(r.ratio[2],6)}. Relación a/c efectiva = ${fmt(r.actualWC,9)}. Las cantidades se mantienen con precisión completa en el motor; los redondeos son de presentación.</p>`+
+      `<h2>8. Lotes, mezcladas y costos</h2><p>Volumen neto: ${fmt(d.volume,6)} m³; reserva: ${fmt(d.waste,3)} %; volumen total: ${fmt(r.batchVolume,6)} m³; ${r.batches} mezcladas de ${fmt(r.perBatch*1000,6)} L. Sacos equivalentes por lote: ${fmt(r.cement*r.batchVolume/d.bag,6)}. Redondear la compra de sacos no cambia la masa de cemento a dosificar.</p>${table(['Material','Por m³ (kg)','Lote (kg)','Por mezclada (kg)','USD/kg','Costo lote (USD)'],r.rows.map(x=>[x.name,fmt(x.wet,6),fmt(x.wet*r.batchVolume,6),fmt(x.wet*r.perBatch,6),fmt(x.price,6),fmt(x.wet*r.batchVolume*x.price,6)]))}<p>Costo de materiales: USD ${fmt(r.cost,6)}/m³; USD ${fmt(r.cost*r.batchVolume,6)} por lote. Precios declarados; no incluye otros costos.</p>`+
+      `<h2>9. Comprobaciones matemáticas</h2>${table(['Comprobación','Resultado','Interpretación'],checks)}`+
+      `<h2>10. Caracterización granulométrica adjunta</h2>${gradingSection(options.grading)}`+
+      `<h2>11. Advertencias técnicas</h2><ul>${warnings.map(w=>`<li>${escapeHTML(w)}</li>`).join('')}</ul><p>Quedan por comprobar los certificados de materiales, la aplicabilidad y edición de normas, las restricciones de exposición, los procedimientos de ensayo y la respuesta de la mezcla real.</p>`+
+      `<h2>12. Resultados experimentales ingresados</h2>${experimentalSection(d,r,options)}`+
+      `<h2>13. Conclusiones</h2><p>${escapeHTML(conclusion)}</p><p>Observaciones del responsable: ${escapeHTML(d.notes||'Sin observaciones adicionales.')}</p>`+
+      `<h2>14. Referencias y trazabilidad</h2><ol>${sources.map(([title,url])=>`<li><a href="${escapeHTML(url)}">${escapeHTML(title)}</a></li>`).join('')}</ol><p>Referencias temáticas: granulometría NTE INEN 696 / ASTM C136/C136M; áridos NTE INEN 872 / ASTM C33/C33M; densidad y absorción NTE INEN 856 y 857 / ASTM C128 y C127; masa unitaria NTE INEN 858 / ASTM C29/C29M; humedad NTE INEN 862 / ASTM C566; asentamiento NTE INEN 1578 / ASTM C143/C143M; compresión NTE INEN 1573 / ASTM C39/C39M. No se afirma equivalencia íntegra ni cumplimiento de versiones no verificadas. Los requisitos no accesibles se identifican como pendientes de contrastar con el texto oficial aplicable.</p>`+
+      `<h2>Anexo. Entradas del proyecto para reproducción</h2><p>Claves técnicas de entrada; valores nulos se muestran como «No ingresado». Las entradas de ensayo se presentan únicamente en su sección y con declaración de datos reales.</p>${table(['Campo','Valor'],inputs)}`;
+  }
+  function csvCell(value){let text=typeof value==='number'?String(value):String(value??'');if(typeof value!=='number'&&/^[\s\uFEFF]*[=+@\-]/.test(text))text="'"+text;return '"'+text.replace(/"/g,'""')+'"';}
+  function exportCSV(d,r){
+    assertResult(r);
+    const rows=[['HormigonLab','1.1.0'],['Proyecto',d.name],['Responsable',d.author],['Origen de datos',d.dataMode==='real'?'Datos reales declarados por el usuario':'DATOS DE DEMOSTRACION'],['Estado','Predosificacion pendiente de validacion experimental'],['f_c MPa',d.fc],['f_cr MPa',r.strength.value],['Agua efectiva kg/m3',r.water],['Agua a anadir kg/m3',r.addedWater],['Relacion a/c efectiva',r.actualWC],['Masa teorica kg/m3',r.totalMass],['Volumen absoluto m3',r.totalVolume],['Costo USD/m3',r.cost],['Volumen neto m3',d.volume],['Volumen con reserva m3',r.batchVolume],['Numero de mezcladas',r.batches],['Volumen por mezclada m3',r.perBatch],[],['Material','Seco kg/m3 (solo aridos)','SSS kg/m3 (solo aridos)','Cantidad a dosificar kg/m3','Lote kg','Mezclada kg','Precio USD/kg','Costo lote USD']];
+    for(const x of r.rows)rows.push([x.name,['fine','coarse'].includes(x.key)?x.dry:'',['fine','coarse'].includes(x.key)?x.ssd:'',x.wet,x.wet*r.batchVolume,x.wet*r.perBatch,x.price,x.wet*r.batchVolume*x.price]);
+    const w=r.rows.find(x=>x.key==='water');
+    rows.push([],['Escenario de humedad de los aridos','Agua a anadir kg/m3'],['Aridos secos al horno',w.dry],['Aridos SSS',w.ssd],['Humedades ingresadas',w.wet],['Agua libre arena kg/m3',r.fine.free],['Agua libre grava kg/m3',r.coarse.free],['Agua del aditivo kg/m3',r.admixtureWater],[],['Advertencias']);
+    for(const w of r.warnings||[])rows.push([w]);
+    return '\uFEFF'+rows.map(row=>row.map(csvCell).join(';')).join('\r\n');
+  }
+  const documentStyle="body{font:14px Arial,sans-serif;color:#243b30;max-width:1050px;margin:35px auto;padding:0 25px;line-height:1.6}table{width:100%;border-collapse:collapse;font-size:12px}td,th{border-bottom:1px solid #ddd;padding:8px;text-align:left;overflow-wrap:anywhere}h2{margin-top:32px}h3{font-size:15px}code,.formula{display:block;white-space:normal;background:#f1f5ed;padding:10px;overflow-wrap:anywhere}a{color:#245b48;overflow-wrap:anywhere}.report-cover{padding:48px 20px;border-bottom:3px solid #245b48}.warning{background:#fcf3e7;padding:12px}.calculation{padding:14px 0;border-bottom:1px solid #ddd}.calculation p{margin:5px 0}.section-number{color:#6b8068;margin-right:10px}.tiny{font-size:11px}.muted{color:#58695e}@media print{@page{size:A4;margin:16mm}body{margin:0;padding:0;font-size:10pt;color:#111}.report-cover{break-after:page;min-height:230mm;border:0;padding:35mm 0}table{font-size:8pt}tr,.calculation{break-inside:avoid}h2,h3{break-after:avoid}a{color:inherit}.table-scroll{overflow:visible}td,th{white-space:normal;padding:5px}.formula,code{font-size:9pt}}";
+  function buildDocument(d,r,options={}){return '<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Memoria de cálculo · HormigónLab</title><style>'+documentStyle+'</style></head><body>'+buildBody(d,r,options)+'</body></html>';}
+  return {buildDocument,documentStyle,steps,renderSteps,buildBody,exportCSV,escapeHTML,csvCell,mixTable,moistureTable,sources,refs};
+});
+</script><script>(function(){
+'use strict';
+const E=window.Hormigon, G=window.HormigonGrading, P=window.HormigonProject, R=window.HormigonReport, C=window.HormigonCompare, VERSION='1.1.0', KEY='hormigonlab.v1', $=s=>document.querySelector(s);
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=(v,n=2)=>Number.isFinite(v)?v.toLocaleString('es-EC',{minimumFractionDigits:n,maximumFractionDigits:n}):'—';
+const clone=v=>JSON.parse(JSON.stringify(v));
+const colors={cement:'#6d8474',fine:'#d7b680',coarse:'#315d4c',water:'#a6c8cc',air:'#e4e9df',admixture:'#c47e55'};
+let data=clone(E.defaults), page='design', projects=[], storageOK=true, statsText='', gradingState=P.defaultGrading(), comparisonA='current', comparisonB='scenario21';
+try {const raw=localStorage.getItem(KEY),old=JSON.parse(raw||'null');if(old){try{const loaded=P.parse({schemaVersion:old.schemaVersion||1,data:old.data,statsText:old.statsText,gradingState:old.gradingState});data=loaded.data;statsText=loaded.statsText;gradingState=loaded.gradingState;}catch(e){localStorage.setItem(KEY+'.recovery',raw);storageOK=false;}projects=Array.isArray(old.projects)?old.projects.slice(0,100).flatMap(p=>{try{if(!p||typeof p.id!=='string')throw Error('Versión inválida');const parsed=P.parse({schemaVersion:p.schemaVersion||1,data:p.data,statsText:p.statsText,gradingState:p.gradingState});return [{...p,...parsed,schemaVersion:2}];}catch{localStorage.setItem(KEY+'.recovery',raw);return [];}}):[];}}catch{storageOK=false;}
+let result=E.calculate(data);
+const nav=[['design','◈','Diseño'],['materials','▧','Materiales'],['lab','⚗','Laboratorio'],['results','▤','Resultados'],['batch','▦','Lotes y costos'],['trial','↗','Mezcla de prueba'],['projects','▱','Mis proyectos'],['guide','ⓘ','Método y normas']];
+const labels={name:'Proyecto',author:'Responsable',reference:'Norma y edición declaradas',notes:'Observaciones',fc:'f′c (MPa)',strengthMode:'Criterio de f′cr',fcrManual:'f′cr manual (MPa)',sd:'Desviación muestral (MPa)',n:'Número de ensayos',size:'TMN (mm)',slumpBand:'Intervalo de asentamiento: 0=1–2in, 1=3–4in, 2=6–7in',entrained:'Aire incorporado',air:'Aire objetivo (%)',waterMode:'Origen del agua',waterManual:'Agua manual (kg/m³)',reduction:'Reducción de agua (%)',wcMode:'Origen de a/c',wcManual:'a/c manual',maxWC:'a/c máxima',minCement:'Cemento mínimo (kg/m³)',coarseMode:'Origen de fracción compactada',coarseManual:'Fracción compactada manual',cementSG:'G del cemento',fineSG:'G SSS de arena',coarseSG:'G SSS de grava',fineAbs:'Absorción arena (%)',coarseAbs:'Absorción grava (%)',fineMoist:'Humedad arena (%)',coarseMoist:'Humedad grava (%)',rodded:'Masa unitaria seca compactada (kg/m³)',fm:'Módulo de finura',admDose:'Dosis aditivo (% cemento)',admDensity:'Densidad del aditivo (kg/m³)',admWater:'Agua en aditivo (% masa)',volume:'Volumen neto (m³)',waste:'Reserva (%)',mixer:'Capacidad útil (L)',bag:'Saco de cemento (kg)',priceCement:'Precio cemento (USD/kg)',priceFine:'Precio arena húmeda (USD/kg)',priceCoarse:'Precio grava húmeda (USD/kg)',priceWater:'Precio agua (USD/kg)',priceAdm:'Precio aditivo (USD/kg)',trialVolume:'Volumen nominal de prueba (m³)',trialDensity:'Densidad fresca medida (kg/m³)',trialSlump:'Asentamiento medido (mm)',trialAir:'Aire medido (%)',cylinderDiameter:'Diámetro probeta (mm)',cylinderHeight:'Altura probeta (mm)',cylinderCount:'Número de probetas',age:'Edad ensayo (días)',testLoad:'Carga máxima (kN)',testDiameter:'Diámetro medido (mm)',sieveInitial:'Masa inicial granulometría (g)',sieves:'Masas retenidas (g), tamices 9,5 a 0,075 mm y fondo',labWet:'Masa húmeda con tara (g)',labDry:'Masa seca con tara (g)',labTare:'Tara humedad (g)',labCoarseDry:'Grava: seca A (g)',labCoarseSSD:'Grava: SSS B (g)',labSubmerged:'Grava: sumergida C (g)',labFineDry:'Arena: seca A (g)',labFineSSD:'Arena: SSS S (g)',labPycWater:'Picnómetro + agua B (g)',labPycSample:'Picnómetro + muestra + agua C (g)',labContainer:'Tara masa unitaria (kg)',labContainerFull:'Recipiente lleno (kg)',labContainerLitres:'Volumen recipiente (L)'};
+function field(k,label,unit='',help='',opts=null){const val=data[k];let input;
+ if(opts)input=`<select id="f-${k}" data-field="${k}">${opts.some(([v])=>String(val)===String(v))?'':'<option value="" selected disabled>Selecciona un valor</option>'}${opts.map(([v,t])=>`<option value="${esc(v)}" ${String(val)===String(v)?'selected':''}>${esc(t)}</option>`).join('')}</select>`;
+ else input=`<input id="f-${k}" data-field="${k}" type="${typeof E.defaults[k]==='number'?'number':'text'}" ${typeof E.defaults[k]==='number'?'step="any" inputmode="decimal"':''} value="${esc(val)}">`;
+ return `<div class="field"><label for="f-${k}">${esc(label)}</label><div class="input-wrap">${input}${unit?`<span class="unit">${unit}</span>`:''}</div>${help?`<span class="help">${esc(help)}</span>`:''}</div>`;
+}
+function noteField(k,label){return `<div class="field full"><label for="f-${k}">${esc(label)}</label><textarea id="f-${k}" data-field="${k}">${esc(data[k])}</textarea></div>`;}
+function card(title,sub,body,num='',extra=''){return `<section class="card"><div class="card-head"><div><h2>${num?`<span class="section-number">${num}</span>`:''}${title}</h2>${sub?`<p>${sub}</p>`:''}</div>${extra}</div><div class="card-body">${body}</div></section>`;}
+function go(p,text,primary=false){return `<button data-page="${p}" class="${primary?'primary':''}">${text}</button>`;}
+function action(a,text,primary=false,disabled=false){return `<button data-action="${a}" class="${primary?'primary':''}" ${disabled?'disabled':''}>${text}</button>`;}
+const modes=[['table','Tabla de referencia'],['manual','Valor manual / ensayo']];
+function metrics(items){return `<div class="metric-grid">${items.map(([label,value,unit,caption],i)=>`<div class="metric ${i===0?'feature':''}"><label>${label}</label><strong>${value}</strong><small>${unit}</small><p>${caption||''}</p></div>`).join('')}</div>`;}
+function volumeBar(r){return `<div class="volume-bar" aria-label="Distribución del volumen absoluto">${Object.entries(r.volumes).map(([k,v])=>`<span title="${k}: ${fmt(v*100)}%" style="width:${v*100}%;background:${colors[k]}"></span>`).join('')}</div><div class="legend">${[['cement','Cemento'],['water','Agua efectiva'],['coarse','Grava'],['fine','Arena'],['air','Aire'],['admixture','Aditivo neto']].map(([k,t])=>`<span style="--swatch:${colors[k]}">${t} ${fmt(r.volumes[k]*100,1)}%</span>`).join('')}</div>`;}
+function errors(){return `<div class="error" role="alert"><strong>Revisa los datos para calcular</strong><br>${result.errors.map(esc).join('<br>')}</div>`;}
+function snapshot(){if(!result.ok)return `<aside class="snapshot"><p class="eyebrow">Vista previa · 1 m³</p>${errors()}<p class="mini-note">No se muestran dosificaciones cuando los datos son inválidos.</p></aside>`;
+return `<aside class="snapshot"><p class="eyebrow">Tu mezcla, en tiempo real</p><h2>Un metro cúbico.<br>Cada material, calculado.</h2><div class="big">${fmt(result.cement,1)} <small>kg</small></div><p class="caption">CEMENTO POR m³</p>${[['Relación a/c efectiva',fmt(result.actualWC,3)],['Agua a añadir',fmt(result.addedWater,1)+' L'],['Arena húmeda',fmt(result.fine.wet,1)+' kg'],['Grava húmeda',fmt(result.coarse.wet,1)+' kg']].map(([l,v])=>`<div class="summary-line"><span>${l}</span><b>${v}</b></div>`).join('')}${volumeBar(result)}${go('results','Ver cálculo completo →',true)}<p class="mini-note">SSS = saturado superficialmente seco.<br>Balance volumétrico: ${fmt(result.totalVolume,6)} m³.<br>Predosificación pendiente de ensayo.</p></aside>`;}
+function heading(title,sub,badge='ASTM · NTE INEN'){return `<div class="page-heading"><div><p class="eyebrow">Laboratorio de mezclas / Hormigón normal</p><h1>${title}</h1><p>${sub}</p></div><span class="badge">${badge}</span></div>`;}
+function design(){return heading('Del ensayo a la mezcla.','Define las condiciones de diseño. La dosificación se actualiza con tus materiales, tus criterios y tus unidades.')+`<div class="stepper">${[['design','01','Condiciones'],['materials','02','Materiales'],['results','03','Dosificación'],['batch','04','Producción']].map(([p,n,t])=>`<button data-page="${p}" class="${page===p?'active':''}"><b>${n}</b>${t}</button>`).join('')}</div><div class="work-grid"><div>`+
+card('Datos del proyecto','Dale contexto y trazabilidad a tu mezcla.',`<div class="fields">${field('name','Nombre del proyecto')}${field('author','Responsable')}${field('university','Universidad')}${field('course','Asignatura')}${field('teacher','Docente')}${field('objective','Objetivo del diseño')}${field('reference','Método y referencias adoptadas','', 'Identifica las fuentes y ediciones efectivamente utilizadas.')}${field('fc','Resistencia especificada f′c','MPa',data.fc===null?'A 28 días para las tablas automáticas.':`A 28 días · ${fmt(data.fc/0.0980665,1)} kgf/cm² · ${fmt(data.fc/E.PSI,0)} psi`)}</div>`,'01')+
+card('Resistencia de dosificación','f′cr es la resistencia media requerida; no es una predicción del resultado del ensayo.',`<div class="fields">${field('strengthMode','Criterio de f′cr','','',[['noHistory','Sin historial · FHWA / ACI 301'],['history','Con historial de ensayos'],['manual','Valor manual documentado']])}${data.strengthMode==='manual'?field('fcrManual','Resistencia media requerida','MPa'):data.strengthMode==='history'?field('sd','Desviación estándar muestral','MPa'): `<div class="inline-note">Regla sin historial; umbrales y márgenes calculados en psi según FHWA 1608 (03/2026).</div>`}${data.strengthMode==='history'?field('n','Número de ensayos independientes','n','Mínimo 15; factor de ajuste hasta 30.'):''}</div>${result.ok?`<div class="result-chip"><span>Resistencia media requerida f′cr</span><strong>${fmt(result.strength.value)} MPa</strong></div>`:''}`,'02')+
+card('Trabajabilidad y exposición','Los límites de exposición los define tu especificación.',`<div class="fields">${field('application','Aplicación del hormigón')}${field('targetSlump','Asentamiento objetivo','mm','Si queda fuera del intervalo de tabla, justifica agua manual.')}${field('exposure','Condiciones de exposición')}${field('exposureReference','Fuente de las restricciones','', 'La aplicación no asigna límites ambientales automáticamente.')}${field('size','Tamaño máximo nominal','mm','Grava; tamaños tabulados nominales.',E.sizes.map(v=>[v,v+' mm']))}${field('slumpBand','Asentamiento de referencia','','Rangos históricos discretos; no se extrapolan.',[['0','25,4–50,8 mm (1–2 in)'],['1','76,2–101,6 mm (3–4 in)'],['2','152,4–177,8 mm (6–7 in)']])}${field('entrained','Tipo de aire','','',[['false','Sin aire incorporado'],['true','Con aire incorporado']])}${field('air','Contenido de aire objetivo','%','Incluye el aire total; verifica con ensayo.')}${field('maxWC','Relación a/c máxima','','0 = sin límite registrado; definir por exposición.')}${field('minCement','Contenido mínimo de cemento','kg/m³','0 = sin mínimo registrado.')}${field('maxCement','Contenido máximo de cemento','kg/m³','0 = sin máximo. Si se excede, se bloquea la mezcla.')}</div>`,'03')+
+card('Criterios de cálculo','Cambia a valores manuales para seguir las tablas o ensayos de tu curso.',`<div class="fields">${field('waterMode','Origen del agua efectiva','','',modes)}${data.waterMode==='manual'?field('waterManual','Agua antes de reducción','kg/m³'): `<div class="inline-note">Tabla histórica según tamaño, asentamiento y aire. Fuente UT Austin / TxDOT, 2010.</div>`}${field('wcMode','Origen de la relación a/c','','',modes)}${data.wcMode==='manual'?field('wcManual','Relación a/c por resistencia','','Sustentar con ensayos; no se deduce de ASTM/INEN.'): `<div class="inline-note">Interpolación por f′cr en la tabla histórica de resistencia a 28 días.</div>`}${field('coarseMode','Origen de la fracción de grava','','',modes)}${data.coarseMode==='manual'?field('coarseManual','Fracción de volumen compactado','m³/m³'): `<div class="inline-note">Fracción aparente seca compactada según TMN y módulo de finura. MF permitido: 2,4–3,0.</div>`}${noteField('notes','Observaciones, procedencia de materiales y criterios adoptados')}</div>`,'04')+`<div class="bottom-actions">${go('guide','Consultar método y fuentes')}${go('materials','Continuar a materiales →',true)}</div></div>${snapshot()}</div>`;}
+function materials(){return heading('Materiales bien caracterizados.','Introduce resultados de laboratorio e identifica si la densidad relativa se midió en base seca o SSS. El motor convierte las bases correctamente.')+`<div class="work-grid"><div>`+
+card('Cemento y agregado grueso','Densidad relativa ≠ masa unitaria compactada.',`<div class="fields">${field('cementType','Tipo de cemento','', 'Esta versión aplica a cemento Portland; otras familias requieren caracterización específica.')}${field('cementSource','Procedencia del cemento')}${field('cementSG','Densidad relativa del cemento','','Ejemplo habitual, sustituir por el ensayo.')}${field('coarseSGBasis','Base de la densidad de grava','','',[['ssd','SSS (saturada superficialmente seca)'],['od','Seca al horno (OD)']])}${field('coarseSG','Densidad relativa de grava','','NTE INEN 857 / ASTM C127; usa la base seleccionada.')}${field('rodded','Masa unitaria seca compactada','kg/m³','NTE INEN 858 / ASTM C29; base seca.')}${field('coarseAbs','Absorción de grava','%','Porcentaje respecto a masa seca.')}${field('coarseMoist','Humedad total de grava','%','NTE INEN 862 / ASTM C566')}</div>`,'01')+
+card('Agregado fino','La humedad libre es la diferencia entre humedad total y absorción.',`<div class="fields">${field('fineSGBasis','Base de la densidad de arena','','',[['ssd','SSS (saturada superficialmente seca)'],['od','Seca al horno (OD)']])}${field('fineSG','Densidad relativa de arena','','NTE INEN 856 / ASTM C128; usa la base seleccionada.')}${field('fm','Módulo de finura de arena','','NTE INEN 696 / ASTM C136')}${field('fineAbs','Absorción de arena','%','Porcentaje respecto a masa seca.')}${field('fineMoist','Humedad total de arena','%','Porcentaje respecto a masa seca.')}</div><div class="inline-note">¿Tienes las pesadas del ensayo? En Laboratorio puedes calcular estos valores y aplicarlos a la mezcla.</div><div class="toolbar">${go('lab','Abrir laboratorio →')}</div>`,'02')+
+card('Agua de mezclado','Registra su procedencia y la evidencia de aptitud.',`<div class="fields">${field('waterSource','Fuente del agua')}${field('waterQuality','Estado de la evidencia','','',[['unknown','Aptitud pendiente de comprobar'],['documented','Con respaldo de aptitud declarado']])}</div><div class="inline-note">La aplicación no evalúa composición química, cloruros o sulfatos del agua. La evidencia debe verificarse según la especificación aplicable.</div>`,'03')+
+card('Aditivo líquido','Dosis sobre la masa de cemento. Usa los datos de la ficha técnica.',`<div class="fields">${field('admName','Nombre y ficha técnica del aditivo')}${field('admDose','Dosis de aditivo','% cemento','0 desactiva el aditivo.')}${field('admDensity','Densidad del producto','kg/m³')}${field('admWater','Fracción de agua del producto','% masa','No confundir con el contenido de sólidos.')}${field('reduction','Reducción de agua verificada','%','Se aplica al agua base; no se estima automáticamente.')}</div><div class="inline-note">El agua contenida en el aditivo se descuenta del agua a añadir. El balance de volumen evita contabilizarla dos veces.</div>`,'03')+`<div class="bottom-actions">${go('design','← Condiciones')}${go('results','Ver dosificación →',true)}</div></div>${snapshot()}</div>`;}
+function safeCalc(fn,render){try{return render(fn());}catch(e){return `<div class="error">${esc(e.message)}</div>`;}}
+function originBanner(){return `<div class="mode-banner ${data.dataMode==='demo'?'demo':'real'}"><div><strong>${data.dataMode==='demo'?'DATOS DE DEMOSTRACIÓN':'DISEÑO CON DATOS REALES'}</strong><span>${data.dataMode==='demo'?'Ejemplo académico; las propiedades y los ensayos no son mediciones de tus materiales.':'Completa los campos vacíos con tus ensayos y especificaciones. Guardar datos no certifica la mezcla.'}</span></div><div class="toolbar">${action('demo','Cargar demostración')}${action('new-real','Nuevo diseño real',true)}</div></div>`;}
+function gradingInput(kind=gradingState.kind){const record=gradingState[kind];return {kind,profileId:record.profileId,customLimits:record.customLimits.filter(r=>r.min!==null||r.max!==null),masses:kind==='fine'?data.sieves:record.masses,initial:kind==='fine'?data.sieveInitial:record.initial,sieves:kind==='fine'?[9.5,4.75,2.36,1.18,.6,.3,.15,.075,0]:record.sieves};}
+function currentGradingResult(){try{return {...G.analyze(gradingInput()),kind:gradingState.kind};}catch{return null;}}
+function gradingPanel(){const input=gradingInput(),record=gradingState[input.kind],profiles=G.profiles.filter(p=>!p.kind||p.kind===input.kind||p.kind==='both');let r,error='';try{r=G.analyze(input);}catch(e){error=e.message;r={rows:input.sieves.map((sieve,i)=>({sieve,mass:input.masses[i],retained:NaN,cumulative:NaN,passing:NaN})),fm:NaN,total:NaN,differencePercent:NaN,balanceOK:false,gradingStatus:'not-evaluated',violations:[],warnings:[]};}
+const selected=G.profiles.find(p=>p.id===input.profileId),limits=input.profileId==='custom'?input.customLimits:(selected?.limits||[]);
+const options=[['none','Sin envolvente: solo caracterización'],...profiles.filter(p=>!['none','custom'].includes(p.id)).map(p=>[p.id,p.label]),['custom','Límites personalizados documentados']];
+return `<div class="fields"><div class="field"><label for="grade-kind">Árido analizado</label><div class="input-wrap"><select id="grade-kind" data-grade="kind"><option value="fine" ${input.kind==='fine'?'selected':''}>Agregado fino / arena</option><option value="coarse" ${input.kind==='coarse'?'selected':''}>Agregado grueso / grava</option></select></div></div><div class="field"><label for="grade-profile">Envolvente de comparación</label><div class="input-wrap"><select id="grade-profile" data-grade="profile">${options.map(([v,t])=>`<option value="${esc(v)}" ${v===input.profileId?'selected':''}>${esc(t)}</option>`).join('')}</select></div></div>${input.kind==='fine'?field('sieveInitial','Masa inicial seca','g'):`<div class="field"><label for="grade-initial">Masa inicial seca de grava</label><div class="input-wrap"><input id="grade-initial" data-grade-initial type="number" step="any" value="${esc(record.initial)}"><span class="unit">g</span></div></div>`}</div>${error?`<div class="error">${esc(error)}</div>`:''}
+<div class="result-chip"><span>${input.kind==='fine'?'Módulo de finura de arena':'Masa recuperada de grava'}</span><strong>${input.kind==='fine'?fmt(r.fm,3):fmt(r.total,1)+' g'}</strong></div><p class="tiny muted">Balance de masas: diferencia ${fmt(r.differencePercent,3)}% · ${r.balanceOK?'dentro de ±0,3%':'requiere revisión'}. Esto no evalúa cumplimiento granulométrico.</p>
+<div class="table-scroll"><table><thead><tr><th>Tamiz mm</th><th>Retenido g</th><th>Retenido %</th><th>Acum. %</th><th>Pasa %</th><th>Intervalo %</th></tr></thead><tbody>${r.rows.map((row,i)=>{const limit=limits.find(l=>l.sieve===row.sieve),stored=record.customLimits.find(l=>l.sieve===row.sieve);return `<tr><td>${row.sieve?fmt(row.sieve,3):'Fondo'}</td><td><input id="gm-${input.kind}-${i}" class="sieve-input" aria-label="Retenido ${input.kind} ${row.sieve||'fondo'}" type="number" min="0" step="any" ${input.kind==='fine'?`data-sieve="${i}"`:`data-coarse="${i}"`} value="${esc(input.masses[i])}"></td><td>${fmt(row.retained)}</td><td>${fmt(row.cumulative)}</td><td>${fmt(row.passing)}</td><td>${input.profileId==='custom'&&row.sieve>0?`<input id="gl-${i}-min" class="limit-input" type="number" min="0" max="100" step="any" aria-label="Mínimo pasa ${row.sieve}" data-limit-sieve="${row.sieve}" data-limit-bound="min" value="${esc(stored?.min)}">–<input id="gl-${i}-max" class="limit-input" type="number" min="0" max="100" step="any" aria-label="Máximo pasa ${row.sieve}" data-limit-sieve="${row.sieve}" data-limit-bound="max" value="${esc(stored?.max)}">`:limit?`${limit.min}–${limit.max}`:'—'}</td></tr>`;}).join('')}</tbody></table></div>
+${error?'':gradingChart(r,limits)}<div class="${r.gradingStatus==='outside'?'warning':'inline-note'}"><strong>${r.gradingStatus==='within'?'Dentro de la envolvente seleccionada':r.gradingStatus==='outside'?'Fuera de la envolvente seleccionada':'Sin evaluación granulométrica concluyente'}</strong><br>${r.gradingStatus==='within'?'Este resultado no demuestra todos los requisitos de la norma ni aprueba la mezcla.':r.gradingStatus==='not-evaluated'?'Selecciona una referencia verificable y completa los datos para comparar.':''}${r.violations?.length?`<ul>${r.violations.map(v=>`<li>${esc(v.message||`Tamiz ${v.sieve} mm: ${fmt(v.actual)}%; requerido ${v.min}–${v.max}%.`)}</li>`).join('')}</ul>`:''}</div>
+${r.warnings?.length?`<ul class="tiny muted">${r.warnings.map(w=>`<li>${esc(w)}</li>`).join('')}</ul>`:''}${r.source?`<p class="tiny muted">Fuente: ${esc(typeof r.source==='string'?r.source:JSON.stringify(r.source))} · ${esc(r.edition||'')}</p>`:''}
+${input.kind==='fine'?action('apply-fm','Usar módulo de finura',true,!r.balanceOK||!r.fmComplete||!Number.isFinite(r.fm)):''}`;}
+function gradingChart(r,limits){const rows=r.rows.filter(x=>x.sieve>0).slice().reverse(),min=Math.min(...rows.map(x=>x.sieve)),max=Math.max(...rows.map(x=>x.sieve));const x=v=>42+300*Math.log(v/min)/Math.log(max/min),y=v=>180-1.5*Math.max(0,Math.min(100,v));const usable=limits.filter(v=>v.sieve>=min&&v.sieve<=max&&Number.isFinite(v.min)&&Number.isFinite(v.max)).sort((a,b)=>a.sieve-b.sieve);return `<svg class="chart" viewBox="0 0 390 220" role="img" aria-label="Curva granulométrica y envolvente seleccionada, eje logarítmico"><rect width="390" height="220" fill="#fafcf7"/>${[0,25,50,75,100].map(v=>`<line x1="42" x2="350" y1="${y(v)}" y2="${y(v)}" stroke="#e1e7dc"/><text x="10" y="${y(v)+4}" fill="#6a7972" font-size="9">${v}%</text>`).join('')}${usable.length>1?`<polygon points="${usable.map(p=>`${x(p.sieve)},${y(p.min)}`).concat([...usable].reverse().map(p=>`${x(p.sieve)},${y(p.max)}`)).join(' ')}" fill="#d7b680" opacity=".32"/>`:''}<polyline points="${rows.map(p=>`${x(p.sieve)},${y(p.passing)}`).join(' ')}" fill="none" stroke="#32654c" stroke-width="2.5"/>${rows.map(p=>`<circle cx="${x(p.sieve)}" cy="${y(p.passing)}" r="3" fill="#32654c"/><text x="${x(p.sieve)}" y="198" fill="#6a7972" text-anchor="middle" font-size="8">${p.sieve}</text>`).join('')}<text x="196" y="215" font-size="8" text-anchor="middle" fill="#6a7972">Abertura de tamiz (mm), escala logarítmica</text></svg>`;}
+function lab(){const sieve=gradingPanel();
+return heading('Tu mesa de laboratorio.','Convierte las pesadas en propiedades del material. Aplica cada resultado de forma explícita al diseño.')+
+`<div class="two-cols"><div>`+card('Análisis granulométrico','Arena y grava se evalúan de forma independiente. NTE INEN 696 / ASTM C136.',sieve)+
+card('Humedad total','NTE INEN 862 / ASTM C566',`<div class="fields">${field('labWet','Húmeda + recipiente','g')}${field('labDry','Seca + recipiente','g')}${field('labTare','Tara del recipiente','g')}</div>`+safeCalc(()=>E.labMoisture(data.labWet,data.labDry,data.labTare),v=>`<div class="formula">H = (M húmeda − M seca) / (M seca − tara) × 100</div><div class="result-chip"><span>Humedad total</span><strong>${fmt(v,3)} %</strong></div><div class="toolbar">${action('moist-fine','Aplicar a arena')}${action('moist-coarse','Aplicar a grava')}</div>`))+
+card('Masa unitaria compactada','NTE INEN 858 / ASTM C29 · muestra seca compactada.',`<div class="fields">${field('labContainer','Masa del recipiente vacío','kg')}${field('labContainerFull','Recipiente lleno','kg')}${field('labContainerLitres','Volumen calibrado','L')}</div>`+safeCalc(()=>E.bulkDensity(data.labContainer,data.labContainerFull,data.labContainerLitres),v=>`<div class="result-chip"><span>Masa unitaria seca</span><strong>${fmt(v,1)} kg/m³</strong></div>${action('apply-bulk','Usar para grava')}`))+`</div><div>`+
+card('Densidad y absorción · grava','NTE INEN 857 / ASTM C127',`<div class="fields">${field('labCoarseDry','Masa seca al horno A','g')}${field('labCoarseSSD','Masa SSS B','g')}${field('labSubmerged','Masa sumergida C','g')}</div>`+safeCalc(()=>E.labCoarse(data.labCoarseDry,data.labCoarseSSD,data.labSubmerged),v=>`<div class="formula">G SSS = B / (B − C)<br>Abs = (B − A) / A × 100</div><div class="result-chip"><span>G SSS / absorción</span><strong>${fmt(v.ssd,3)} / ${fmt(v.abs,2)}%</strong></div><p class="tiny muted">G seca ${fmt(v.od,3)} · G aparente ${fmt(v.apparent,3)}</p>${action('apply-coarse','Usar propiedades de grava',true)}`))+
+card('Densidad y absorción · arena','NTE INEN 856 / ASTM C128 · método con picnómetro.',`<div class="fields">${field('labFineDry','Masa seca A','g')}${field('labFineSSD','Masa SSS S','g')}${field('labPycWater','Picnómetro + agua B','g')}${field('labPycSample','Picnómetro + muestra + agua C','g')}</div>`+safeCalc(()=>E.labFine(data.labFineDry,data.labFineSSD,data.labPycWater,data.labPycSample),v=>`<div class="formula">G SSS = S / (B + S − C)<br>Abs = (S − A) / A × 100</div><div class="result-chip"><span>G SSS / absorción</span><strong>${fmt(v.ssd,3)} / ${fmt(v.abs,2)}%</strong></div><p class="tiny muted">G seca ${fmt(v.od,3)} · G aparente ${fmt(v.apparent,3)}</p>${action('apply-fine','Usar propiedades de arena',true)}`))+
+card('Qué verifica este módulo','Las fórmulas no sustituyen el procedimiento de ensayo.',`<p class="guide-copy">Las pesadas deben provenir de muestras preparadas y ensayadas según la edición aplicable. El programa calcula propiedades; no certifica el muestreo, la temperatura, la calibración o el cumplimiento del procedimiento.</p><p class="guide-copy">El módulo de finura usa los retenidos acumulados desde 9,5 hasta 0,15 mm. Los resultados de paso usan la masa inicial. El control de balance del 0,3% es una alerta de revisión, no una evaluación integral de aceptación granulométrica.</p>`)+`</div></div>`;}
+function gradationChart(s){const rows=s.rows.slice(0,8).reverse(), pts=rows.map((r,i)=>`${42+i*43},${180-r.passing*1.5}`).join(' ');return `<svg class="chart" viewBox="0 0 390 220" role="img" aria-label="Curva granulométrica de arena, porcentaje que pasa por tamiz"><rect width="390" height="220" fill="#fafcf7"/>${[0,25,50,75,100].map(v=>`<line x1="42" x2="350" y1="${180-v*1.5}" y2="${180-v*1.5}" stroke="#e1e7dc"/><text x="10" y="${184-v*1.5}" fill="#6a7972" font-size="9">${v}%</text>`).join('')}<polyline points="${pts}" fill="none" stroke="#32654c" stroke-width="2.5"/>${rows.map((r,i)=>`<circle cx="${42+i*43}" cy="${180-r.passing*1.5}" r="3" fill="#32654c"/><text x="${42+i*43}" y="198" fill="#6a7972" text-anchor="middle" font-size="8">${r.sieve}</text>`).join('')}<text x="196" y="215" font-size="8" text-anchor="middle" fill="#6a7972">Tamices (mm), espaciado por serie</text></svg>`;}
+function mixTable(r,mult=1){return `<div class="table-scroll"><table><thead><tr><th>Material</th><th>Base seca (kg)</th><th>Base SSS (kg)</th><th>Con humedad actual (kg)</th></tr></thead><tbody>${r.rows.filter(row=>row.key!=='water').map(row=>`<tr><td><span class="material-dot" style="--swatch:${colors[row.key]}"></span>${row.name}</td><td>${fmt(row.dry*mult)}</td><td>${fmt(row.ssd*mult)}</td><td><strong>${fmt(row.wet*mult)}</strong></td></tr>`).join('')}</tbody></table></div><div class="table-foot">Las bases seca y SSS se refieren a los áridos. Cemento y aditivo conservan la misma masa de producto.</div>${waterTable(r,mult)}`;}
+function waterTable(r,mult=1){const w=r.rows.find(x=>x.key==='water');return `<div class="table-scroll"><table><thead><tr><th>Balance de agua</th><th>kg ≈ L</th></tr></thead><tbody>${[['Agua efectiva de diseño',r.water],['Agua que se añadiría con áridos totalmente secos',w.dry],['Agua que se añadiría con áridos en SSS',w.ssd],['Agua a añadir con la humedad ingresada',w.wet],['Agua libre de arena (negativa = absorción)',r.fine.free],['Agua libre de grava (negativa = absorción)',r.coarse.free],['Agua contenida en el aditivo',r.admixtureWater]].map(([t,v])=>`<tr><td>${t}</td><td><strong>${fmt(v*mult,3)}</strong></td></tr>`).join('')}</tbody></table></div>`;}
+function trace(r){return R.renderSteps(data,r);}
+function results(){if(!result.ok)return heading('Dosificación y memoria.','Corrige los datos antes de generar cantidades.')+errors()+`<div class="toolbar">${go('design','Revisar diseño',true)}${go('materials','Revisar materiales')}</div>`;
+return heading('Una mezcla que puedes verificar.','Resultados para 1 m³. Consulta las tres condiciones de los áridos y sigue cada paso de la memoria.','Predosificación')+metrics([
+['Cemento',fmt(result.cement,1),'kg/m³','Base de la dosificación'],['Agua / cemento',fmt(result.actualWC,3),'','Relación efectiva en masa'],['Agua efectiva',fmt(result.water,1),'L/m³','Agua libre de diseño'],['Masa teórica',fmt(result.totalMass,0),'kg/m³','Con humedad y aditivo']])+`<section class="card"><div class="card-head"><div><h2>Dosificación por metro cúbico</h2><p>La columna húmeda es la cantidad a pesar con la humedad ingresada.</p></div><span class="badge">Σ V = 1,000000 m³</span></div>${mixTable(result)}<div class="table-foot">Los tres escenarios de agua son cantidades alternativas a añadir, no estados físicos del agua. El agua efectiva se conserva. Densidad adoptada del agua: 1000 kg/m³.</div></section>`+
+`<div class="two-cols">${card('Proporción en masa SSS','Cemento : arena : grava',`<div class="big" style="font-size:30px;letter-spacing:-1px">1 : ${fmt(result.ratio[1])} : ${fmt(result.ratio[2])}</div><p class="tiny muted">a/c = ${fmt(result.actualWC,3)} · No es una proporción por baldes.<br>${fmt(result.cement/data.bag,3)} sacos equivalentes de ${fmt(data.bag,0)} kg por m³.</p>`)}${card('Composición del volumen','El balance se resuelve por volumen absoluto.',volumeBar(result))}</div>`+
+`<details><summary>Supuestos y puntos por verificar (${result.warnings.length})</summary><ul>${result.warnings.map(w=>`<li>${esc(w)}</li>`).join('')}</ul></details><section class="card"><div class="card-head"><div><h2>Memoria de cálculo</h2><p>Fórmulas, sustitución numérica y comprobaciones.</p></div>${action('report','Descargar informe')}</div>${trace(result)}</section><div class="bottom-actions"><div class="toolbar">${action('csv','Exportar CSV')}${action('print','Imprimir / PDF')}</div>${go('batch','Calcular mi lote →',true)}</div>`;}
+function batch(){return heading('De un metro cúbico a tu lote.','Escala las cantidades, planifica mezcladas iguales y calcula el costo de materiales.')+`<div class="work-grid"><div>`+card('Volumen de producción','La reserva incrementa el volumen total una sola vez.',`<div class="fields">${field('volume','Volumen neto requerido','m³')}${field('waste','Reserva por pérdidas','%')}${field('mixer','Capacidad útil de mezclado','L','Volumen útil de mezcla, no capacidad nominal del tambor.')}${field('bag','Masa por saco de cemento','kg')}</div>`)+
+card('Probetas cilíndricas','Calcula un volumen neto; la reserva del lote se añade después.',`<div class="fields three">${field('cylinderDiameter','Diámetro','mm')}${field('cylinderHeight','Altura','mm')}${field('cylinderCount','Número de probetas','u')}</div>`+safeCalc(()=>E.cylinders(data.cylinderDiameter,data.cylinderHeight,data.cylinderCount,0),v=>`<div class="result-chip"><span>Volumen neto de probetas</span><strong>${fmt(v*1000,3)} L</strong></div>${action('use-cylinders','Usar este volumen para el lote')}`))+
+card('Precios de materiales','USD/kg. Ejemplos editables; incluye solo materiales, sin transporte ni mano de obra.',`<div class="fields three">${field('priceCement','Cemento','$/kg')}${field('priceFine','Arena húmeda','$/kg')}${field('priceCoarse','Grava húmeda','$/kg')}${field('priceWater','Agua a añadir','$/kg')}${field('priceAdm','Aditivo','$/kg')}</div>`)+`</div>${snapshot()}</div>`+(result.ok?metrics([['Volumen con reserva',fmt(result.batchVolume,4),'m³',`Neto: ${fmt(data.volume,4)} m³`],['Mezcladas',fmt(result.batches,0),'',`${fmt(result.perBatch*1000,2)} L cada una`],['Costo del lote','$'+fmt(result.cost*result.batchVolume),'USD',`$${fmt(result.cost)} por m³`],['Sacos equivalentes',fmt(result.cement*result.batchVolume/data.bag,2),'',`Compra: ${Math.ceil(result.cement*result.batchVolume/data.bag)} sacos de ${fmt(data.bag,0)} kg`]])+`<section class="card"><div class="card-head"><div><h2>Orden de pesaje · materiales húmedos</h2><p>El redondeo de compra de sacos no modifica la dosificación.</p></div>${action('csv','Exportar cantidades')}</div><div class="table-scroll"><table><thead><tr><th>Material</th><th>Por m³ (kg)</th><th>Lote total (kg)</th><th>Por mezclada (kg)</th><th>Costo lote</th></tr></thead><tbody>${result.rows.map(r=>`<tr><td>${r.name}</td><td>${fmt(r.wet)}</td><td><strong>${fmt(r.wet*result.batchVolume)}</strong></td><td>${fmt(r.wet*result.perBatch)}</td><td>$${fmt(r.wet*result.batchVolume*r.price)}</td></tr>`).join('')}</tbody></table></div><div class="table-foot">Las mezcladas se reparten en volúmenes iguales, sin exceder la capacidad útil. Cemento y áridos se pesan; el agua equivale a litros con ρ = 1000 kg/m³.</div></section>`:errors());}
+function trials(){return heading('Comprueba la mezcla en el laboratorio.','Registra propiedades frescas, evalúa el rendimiento y calcula resultados de compresión.')+`<div class="two-cols"><div>`+
+card('Procedencia de los resultados','Los datos de demostración nunca se presentan como ensayos reales.',`<div class="fields">${field('experimentalRecorded','Registro experimental confirmado','','Solo activa esta declaración para resultados realmente medidos.',[['false','No hay resultados experimentales confirmados'],['true','He ingresado mis resultados experimentales']])}</div><p class="tiny muted">Origen del proyecto: ${data.dataMode==='real'?'datos reales por completar/verificar':'DATOS DE DEMOSTRACIÓN'}. Registrar resultados no aprueba la mezcla.</p>`)+
+card('Rendimiento de la mezcla de prueba','Calculado con las cantidades teóricas dosificadas; si hubo pérdidas o desvíos de pesaje, no representa el rendimiento real.',`<div class="fields">${field('trialVolume','Volumen nominal preparado','m³')}${field('trialDensity','Densidad fresca medida','kg/m³')}${field('trialSlump','Asentamiento medido','mm')}${field('trialAir','Aire medido','%')}</div>`+safeCalc(()=>E.trial(result,data.trialVolume,data.trialDensity),t=>`<div class="formula">Rendimiento = masa del lote / densidad fresca<br>${fmt(t.mass,3)} / ${fmt(data.trialDensity,1)} = ${fmt(t.yieldVolume,6)} m³</div><div class="result-chip"><span>Rendimiento relativo</span><strong>${fmt(t.relative,4)}</strong></div><p class="tiny muted">Factor para normalizar cantidades: ${fmt(t.factor,5)}. La normalización conserva las proporciones; no rediseña automáticamente el aire o el asentamiento.</p><div class="table-scroll"><table><thead><tr><th>Material</th><th>Normalizado (kg/m³)</th></tr></thead><tbody>${t.rows.map(r=>`<tr><td>${r.name}</td><td>${fmt(r.normalized)}</td></tr>`).join('')}</tbody></table></div><div class="inline-note">Asentamiento observado: ${fmt(data.trialSlump,1)} mm. Aire medido: ${fmt(data.trialAir,1)}%; objetivo: ${fmt(data.air,1)}%. Revisa estos resultados antes de modificar el diseño.</div>`))+
+card('Resistencia de un cilindro','NTE INEN 1573 / ASTM C39 · sección circular.',`<div class="fields">${field('testLoad','Carga máxima','kN')}${field('testDiameter','Diámetro medio medido','mm')}${field('age','Edad del ensayo','días')}</div>`+safeCalc(()=>E.compression(data.testLoad,data.testDiameter),v=>`<div class="formula">f = P / A = P × 1000 / (πd² / 4)</div><div class="result-chip"><span>Resistencia a ${fmt(data.age,0)} días</span><strong>${fmt(v,2)} MPa</strong></div><p class="tiny muted">${fmt(v/.0980665,1)} kgf/cm² · ${fmt(v/E.PSI,0)} psi. Resultado individual sin correcciones de esbeltez o aceptación de lote.</p>`))+`</div><div>`+
+card('Estadística de resultados','Ingresa resultados de ensayo independientes en MPa; un ensayo puede ser el promedio de varias probetas.',`<div class="field"><label for="stats">Un resultado por línea; punto o coma decimal</label><textarea id="stats" data-stats rows="7" placeholder="32,1&#10;34,5&#10;33,8">${esc(statsText)}</textarea><span class="help">Separa por salto de línea o punto y coma, no por coma.</span></div>`+(statsText.trim()?safeCalc(()=>E.stats(parseStats()),s=>`<div class="result-chip"><span>Media / desviación muestral</span><strong>${fmt(s.mean)} / ${fmt(s.sd)} MPa</strong></div><p class="tiny muted">n = ${s.n} · coeficiente de variación = ${fmt(s.cv)}%. ${s.n<15?'Se necesitan al menos 15 ensayos para usar el modo con historial.':''}</p>${action('apply-stats','Usar historial para f′cr',true,!s.historyEligible)}`):'<div class="inline-note">La desviación se calcula con n − 1. El programa no trata cada cilindro como un ensayo de aceptación.</div>'))+
+card('Registro y trazabilidad','Los campos y notas se incluyen al guardar el proyecto.',`<p class="guide-copy">Si el asentamiento, el aire o la resistencia no son adecuados, ajusta los parámetros de diseño y prepara otra mezcla de prueba. Guarda cada iteración como una versión distinta para comparar sus proporciones y costos.</p><div class="toolbar">${action('save','Guardar esta iteración',true)}${go('projects','Comparar proyectos')}</div>`)+`</div></div>`;}
+function parseStats(){return statsText.trim().split(/[;\n]+/).map(v=>Number(v.trim().replace(',','.')));}
+const sources=[
+['ACI PRC-211.1-22 · alcance del método de volumen absoluto','https://www.concrete.org/Portals/0/Files/PDF/Previews/211.1-22_preview.pdf'],
+['UT Austin / TxDOT · ConcreteWorks (2010), tablas históricas ACI 211','https://library.ctr.utexas.edu/ctr-publications/5-4563-01-1.pdf'],
+['VDOT · Manual de materiales (2025), apéndice E, fracción de grava','https://www.vdot.virginia.gov/media/vdotvirginiagov/doing-business/technical-guidance-and-support/technical-guidance-documents/materials/bu-mat-MOI-IV_482-25_250804_acc.pdf'],
+['FHWA 1608 (03/2026) · resistencia media requerida y factores','https://highways.dot.gov/sites/fhwa.dot.gov/files/1608_v14.pdf'],
+['FHWA 1638 · correcciones por humedad','https://highways.dot.gov/media/43476'],
+['MIDUVI · NEC-SE-HM, referencias NTE INEN y ASTM','https://www.habitatyvivienda.gob.ec/wp-content/uploads/2023/03/8.-NEC-SE-HM-Hormigon-Armado.pdf'],
+['INEN · catálogo y acceso a normas oficializadas','https://www.normalizacion.gob.ec/normas-oficializadas/'],
+['ASTM · normas de cemento, áridos y hormigón','https://store.astm.org/products-services/standards-and-publications/standards/cement-standards-and-concrete-standards.html']
+];
+const norms=[['Granulometría de áridos','696','C136/C136M'],['Densidad y absorción de arena','856','C128'],['Densidad y absorción de grava','857','C127'],['Masa unitaria y vacíos','858','C29/C29M'],['Humedad total de áridos','862','C566'],['Requisitos de áridos','872','C33/C33M'],['Asentamiento','1578','C143/C143M'],['Compresión de cilindros','1573','C39/C39M']];
+function guide(){return heading('Cálculos abiertos. Criterios explícitos.','Consulta el alcance, las referencias y los supuestos antes de adoptar una mezcla.','Versión '+VERSION)+
+`<div class="warning"><strong>Alcance técnico.</strong> Se implementa predosificación por volumen absoluto con tablas históricas ACI 211 y referencias de ensayos ASTM/NTE INEN. No existe una guía única obligatoria del curso. La consistencia matemática no demuestra conformidad normativa integral ni validación experimental.</div>`+
+card('Cómo está construido el cálculo','Volumen absoluto · hormigón de densidad normal',`<div class="guide-copy"><p>El programa propone una predosificación de hormigón convencional con cemento Portland, arena, grava, agua, aire y un aditivo líquido opcional. Parte de f′c, calcula o recibe f′cr, selecciona agua y a/c, determina cemento y grava, y obtiene la arena por diferencia hasta cerrar 1 m³.</p><p>La relación a/c, el agua y la fracción de grava pueden ingresarse manualmente para adoptar criterios documentados del proyecto. Los límites por exposición y el contenido mínimo de cemento son entradas explícitas; la aplicación no los deduce de una clase ambiental.</p><h3>Tablas automáticas y unidades</h3><p>Agua y a/c: tablas históricas ACI 211 reproducidas en ConcreteWorks (UT Austin / TxDOT, 2010). La fracción compactada de grava coincide con el apéndice E de VDOT (2025). No se presentan como tablas de la edición ACI 211.1-22.</p><p>Conversión: 1 psi = ${E.PSI} MPa; 1 lb/yd³ = ${fmt(E.PCY,9)} kg/m³. El motor interpola linealmente por f′cr y por MF; no extrapola. Los rangos de asentamiento son discretos. TMN automático: 9,5–37,5 mm; MF: 2,4–3,0. Aire incorporado: objetivo ingresado manualmente.</p><h3>Supuestos del balance</h3><p>ρ agua = 1000 kg/m³. Densidades relativas bulk de áridos ingresadas en base seca o SSS, convertidas a SSS antes del balance. Humedad y absorción respecto a masa seca. El aditivo se trata por masa, densidad de producto y fracción de agua; su volumen residual evita duplicar agua. La suma de volúmenes es una aproximación aditiva convencional.</p><h3>Qué requiere comprobación adicional</h3><p>La mezcla se valida con ensayos de trabajabilidad, aire, rendimiento y resistencia. No incluye diseño de hormigón autocompactante, ligero, masivo o de alta resistencia, adiciones cementicias múltiples, bombeabilidad, retracción, calor, durabilidad completa, aceptación estadística de obra ni un diseño estructural. Las calculadoras de ensayo procesan datos y no verifican todo el procedimiento de laboratorio.</p><h3>Guardar y compartir</h3><p>Los proyectos y el autoguardado permanecen en este navegador. Exporta JSON para respaldarlos y abrirlos en otro equipo. CSV exporta cantidades; el informe HTML conserva datos, resultados, supuestos y memoria. Imprimir / PDF usa el diálogo del navegador. La copia portátil funciona sin conexión y sin instalación.</p></div>`)+
+`<section class="card"><div class="card-head"><div><h2>Referencias de ensayo para el curso</h2><p>Correspondencias temáticas; las ediciones y equivalencias vigentes deben verificarse.</p></div></div><div class="table-scroll"><table><thead><tr><th>Ensayo / especificación</th><th>NTE INEN</th><th>ASTM</th></tr></thead><tbody>${norms.map(n=>`<tr>${n.map(v=>`<td>${v}</td>`).join('')}</tr>`).join('')}</tbody></table></div></section>`+
+card('Edición de la especificación de áridos','NTE INEN 872: distinguir referencia histórica de edición vigente.','<p class="guide-copy">El Registro Oficial N.º 318, de 3 de julio de 2026, oficializa la segunda revisión de NTE INEN 872. Las envolventes incorporadas aquí corresponden a la primera revisión de 2011, cuyo contenido numérico se pudo contrastar. No se atribuyen a la revisión de 2026 ni certifican cumplimiento de esa edición. <a href="https://www.registroficial.gob.ec/registro-oficial-no-318-21/" target="_blank" rel="noopener noreferrer">Consultar oficialización</a>.</p>')+
+card('Fuentes y trazabilidad','Referencias consultadas el 15 de octubre de 2026.',`<ol class="guide-copy">${sources.map(([t,url])=>`<li><a href="${url}" target="_blank" rel="noopener noreferrer">${t} ↗</a></li>`).join('')}</ol><p class="tiny muted">NTE INEN 1578: referencia adicional en las <a href="https://www.loja.gob.ec/files/image/dependencias/RegeneraionUrbana/aguas/cons/especificaciones_obra_civil.pdf" target="_blank" rel="noopener noreferrer">especificaciones de obra civil del Municipio de Loja</a>.</p>`)+
+card('Tablas incorporadas','Datos numéricos, conversión e interpolación visibles.',`<details><summary>Agua base (kg/m³) y fracción de grava</summary><div class="table-scroll"><table><thead><tr><th>TMN (mm)</th><th>Agua 1–2 in</th><th>Agua 3–4 in</th><th>Agua 6–7 in</th><th>Grava MF 2,8</th></tr></thead><tbody>${E.sizes.map((v,i)=>`<tr><td>${v}</td>${E.waterTable.plain.map(r=>`<td>${fmt(r[i]*E.PCY,3)}</td>`).join('')}<td>${fmt(E.coarseTable[i][2],3)}</td></tr>`).join('')}</tbody></table></div><p class="tiny muted">Agua sin aire incorporado. El código fuente contiene ambas tablas. En los informes se registra el modo y el valor utilizado.</p></details>`);}
+function comparisonPanel(){
+ const choices=[['current','Mezcla abierta',data],...[21,28,35].map(fc=>['scenario'+fc,'Demostración · '+fc+' MPa',C.scenario(fc)]),...projects.map(p=>['saved:'+p.id,p.data.name+' · '+p.date,P.parse({schemaVersion:p.schemaVersion||1,data:p.data}).data])];
+ const a=choices.find(x=>x[0]===comparisonA)||choices[0],b=choices.find(x=>x[0]===comparisonB)||choices[1],c=C.compare(a[2],b[2]);
+ const select=(key,value)=>'<div class="field"><label for="compare-'+key+'">Escenario '+key.toUpperCase()+'</label><div class="input-wrap"><select id="compare-'+key+'" data-compare="'+key+'">'+choices.map(([id,label])=>'<option value="'+esc(id)+'" '+(id===value?'selected':'')+'>'+esc(label)+'</option>').join('')+'</select></div></div>';
+ const status=(d,r,label)=>'<div class="'+(r.ok?'inline-note':'error')+'"><strong>'+esc(label)+'</strong><p>'+esc(r.ok?'Balance matemático calculado; pendiente de ensayos.':r.errors.join(' '))+'</p><p>Origen: '+(d.dataMode==='demo'?'DEMOSTRACIÓN':'datos reales declarados')+' · a/c máxima: '+(d.maxWC>0?fmt(d.maxWC,3):'sin declarar')+' · cemento mínimo/máximo: '+fmt(d.minCement)+' / '+(d.maxCement>0?fmt(d.maxCement):'sin declarar')+' kg/m³.</p><p>TMN '+fmt(d.size)+' mm · asentamiento objetivo '+fmt(d.targetSlump)+' mm · reducción de agua '+fmt(d.reduction)+'%.</p>'+(r.warnings?.length?'<details><summary>Advertencias del escenario</summary><ul>'+r.warnings.map(w=>'<li>'+esc(w)+'</li>').join('')+'</ul></details>':'')+'</div>';
+ return card('Comparador de dos escenarios','Diferencia = B − A. Las demostraciones conservan los mismos materiales; solo cambia f′c.','<div class="fields">'+select('a',a[0])+select('b',b[0])+'</div><div class="two-cols">'+status(a[2],c.left,'A · '+a[1])+status(b[2],c.right,'B · '+b[1])+'</div><div class="table-scroll"><table><thead><tr><th>Parámetro</th><th>A</th><th>B</th><th>B − A</th><th>Unidad</th></tr></thead><tbody>'+c.rows.map(x=>'<tr><td>'+esc(x.label)+'</td><td>'+fmt(x.a,6)+'</td><td>'+fmt(x.b,6)+'</td><td>'+fmt(x.delta,6)+'</td><td>'+x.unit+'</td></tr>').join('')+'</tbody></table></div><p class="tiny muted">La demostración de 35 MPa queda fuera de la tabla automática de a/c al calcular f′cr. Se bloquea sin extrapolar ni inventar una relación manual. Para estudiar otras condiciones, edita la mezcla abierta y guarda otra versión.</p>');
+}
+function projectPage(){const rows=projects.map(p=>({p,r:E.calculate(p.data)}));return heading('Tu biblioteca de mezclas.','Guarda iteraciones, compáralas y conserva respaldos independientes de este navegador.')+`<div class="toolbar" style="margin-bottom:22px">${action('save','Guardar mezcla actual',true)}${action('export','Exportar JSON')}${action('import','Importar JSON')}${action('demo','Cargar demostración')}</div><section class="card"><div class="card-head"><div><h2>Proyectos guardados</h2><p>${projects.length} ${projects.length===1?'versión':'versiones'} en este navegador. Guardar crea una versión nueva.</p></div></div>${rows.length?rows.map(({p,r})=>`<div class="project"><div><h3>${esc(p.data.name)}</h3><p>${esc(p.date)} · f′c ${fmt(p.data.fc)} MPa · ${r.ok?'a/c '+fmt(r.actualWC,3):'datos por revisar'}</p></div><div class="toolbar"><button data-load="${esc(p.id)}">Abrir</button><button data-delete="${esc(p.id)}" aria-label="Eliminar ${esc(p.data.name)}">Eliminar</button></div></div>`).join(''):'<div class="empty">Tu primera mezcla empieza aquí.<br>Guarda el diseño actual para conservar una versión.</div>'}</section>`+
+comparisonPanel()+(rows.length?`<section class="card"><div class="card-head"><div><h2>Comparación de las últimas 6 versiones</h2><p>Costos y agua con las humedades registradas en cada versión.</p></div></div><div class="table-scroll"><table><thead><tr><th>Proyecto</th><th>f′c MPa</th><th>a/c</th><th>Cemento kg/m³</th><th>Agua añadida L/m³</th><th>USD/m³</th></tr></thead><tbody>${rows.slice(0,6).map(({p,r})=>`<tr><td>${esc(p.data.name)}</td><td>${fmt(p.data.fc)}</td><td>${fmt(r.actualWC,3)}</td><td>${fmt(r.cement,1)}</td><td>${fmt(r.addedWater,1)}</td><td>${fmt(r.cost)}</td></tr>`).join('')}</tbody></table></div></section>`:'')+
+`<div class="inline-note">El almacenamiento local puede borrarse al limpiar datos del navegador. Exportar JSON permite restaurar todos los datos de la mezcla actual, incluidos ensayos y observaciones. Los datos no se sincronizan entre dispositivos.</div>`;}
+function render(){result=E.calculate(data);const title=nav.find(x=>x[0]===page)[2];$('#app').innerHTML=`<div class="shell"><aside class="sidebar"><div class="brand"><div class="brand-mark">H</div><div>HormigónLab<small>MEZCLAS CON CRITERIO</small></div></div><p class="nav-label">Espacio de trabajo</p><nav class="nav" aria-label="Secciones">${nav.map(([p,ico,t])=>`<button data-page="${p}" class="${page===p?'active':''}" ${page===p?'aria-current="page"':''}><span aria-hidden="true">${ico}</span><span>${t}</span></button>`).join('')}</nav><div class="sidebar-foot"><strong><span class="dot"></span>Tu laboratorio, a mano.</strong>Volumen absoluto · unidades SI<br>v${VERSION} · Datos en este navegador</div></aside><div class="workspace"><header class="topbar"><div class="breadcrumb">Laboratorio <span class="muted">/</span><strong>${title}</strong></div><div class="top-actions"><span class="save-indicator">${storageOK?'● Autoguardado local':'Almacenamiento no disponible'}</span>${action('save','Guardar proyecto')}${action('print','↓ Informe / PDF',true,!result.ok)}</div></header><main id="main" tabindex="-1">${originBanner()}${({design,materials,lab,results,batch,trial:trials,projects:projectPage,guide})[page]()}<footer><span>HormigónLab · ${esc(data.name)}</span><span>Diseño preliminar · validación mediante ensayo</span></footer></main></div></div>`;}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify({schemaVersion:2,data,projects,statsText,gradingState}));storageOK=true;}catch{storageOK=false;toast('No se pudo guardar en este navegador. Exporta un respaldo JSON.');}}
+function toast(message){const node=$('#toast');node.textContent=message;node.classList.add('visible');clearTimeout(toast.timer);toast.timer=setTimeout(()=>node.classList.remove('visible'),4500);}
+function save(){projects=P.saveVersion(projects,{data,statsText,gradingState});persist();if(storageOK)toast('Proyecto guardado como una nueva versión.');}
+function validateImport(obj){return P.parse(obj).data;}
+function filename(ext){return (data.name||'mezcla').replace(/[^a-zA-Z0-9áéíóúñ _-]/g,'').slice(0,75).trim().replace(/ +/g,'-')+'.'+ext;}
+function download(content,type,name){const url=URL.createObjectURL(new Blob([content],{type})), a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);}
+function reportOptions(){return {statsText,generatedAt:new Date().toLocaleString('es-EC'),version:VERSION,grading:['fine','coarse'].map(kind=>{try{return G.analyze(gradingInput(kind));}catch{return null;}}).filter(Boolean)};}
+function reportBody(){if(!result.ok)throw new Error('Corrige los datos antes de exportar el informe.');return R.buildBody(data,result,reportOptions());}
+function csv(){if(!result.ok)throw new Error('Corrige el diseño para exportar cantidades.');download(R.exportCSV(data,result),'text/csv;charset=utf-8',filename('csv'));}
+const handlers={
+ save,export(){download(JSON.stringify(P.pack(data,{statsText,gradingState}),null,2),'application/json',filename('json'));},import(){$('#import-file').click();},
+ print(){$('#print-report').innerHTML=reportBody();window.print();},report(){download(R.buildDocument(data,result,reportOptions()),'text/html;charset=utf-8',filename('html'));},csv,
+ demo(){save();data=clone(E.defaults);statsText='';gradingState=P.defaultGrading();page='design';toast('Demostración cargada. Tu mezcla anterior quedó guardada.');},
+ 'new-real'(){save();data=E.createRealDesign({author:data.author,name:'Nuevo diseño · datos reales'});statsText='';gradingState=P.defaultGrading();page='design';toast('Diseño real vacío. La mezcla anterior quedó guardada.');},
+ 'apply-fm'(){const s=currentGradingResult();if(!s||s.kind!=='fine'||!s.balanceOK||!s.fmComplete||!Number.isFinite(s.fm))throw new Error('Completa y revisa la granulometría de arena antes de aplicar MF.');data.fm=s.fm;toast('MF aplicado. La valoración granulométrica se conserva por separado.');},
+ 'moist-fine'(){data.fineMoist=E.labMoisture(data.labWet,data.labDry,data.labTare);toast('Humedad aplicada a la arena.');},
+ 'moist-coarse'(){data.coarseMoist=E.labMoisture(data.labWet,data.labDry,data.labTare);toast('Humedad aplicada a la grava.');},
+ 'apply-coarse'(){const p=E.labCoarse(data.labCoarseDry,data.labCoarseSSD,data.labSubmerged);data.coarseSG=p.ssd;data.coarseAbs=p.abs;data.coarseSGBasis='ssd';toast('Densidad SSS y absorción de grava aplicadas.');},
+ 'apply-fine'(){const p=E.labFine(data.labFineDry,data.labFineSSD,data.labPycWater,data.labPycSample);data.fineSG=p.ssd;data.fineAbs=p.abs;data.fineSGBasis='ssd';toast('Densidad SSS y absorción de arena aplicadas.');},
+ 'apply-bulk'(){data.rodded=E.bulkDensity(data.labContainer,data.labContainerFull,data.labContainerLitres);toast('Masa unitaria aplicada a la grava.');},
+ 'use-cylinders'(){data.volume=E.cylinders(data.cylinderDiameter,data.cylinderHeight,data.cylinderCount,0);toast('Volumen de probetas aplicado al lote.');},
+ 'apply-stats'(){const s=E.stats(parseStats());if(!s.historyEligible)throw new Error('Se requieren al menos 15 ensayos con variabilidad válida.');data.n=s.n;data.sd=s.sd;data.strengthMode='history';toast('Historial aplicado al diseño.');}
+};
+let renderTimer;
+function updateFromElement(el){
+ if(el.dataset.field){const k=el.dataset.field;if(typeof E.defaults[k]==='number')data[k]=el.value.trim()===''?null:Number(el.value);else if(typeof E.defaults[k]==='boolean')data[k]=el.value==='true';else data[k]=el.value;
+
+
+ }else if(el.dataset.sieve!==undefined){data.sieves[Number(el.dataset.sieve)]=el.value.trim()===''?null:Number(el.value);}
+ else if(el.dataset.coarse!==undefined){gradingState.coarse.masses[Number(el.dataset.coarse)]=el.value.trim()===''?null:Number(el.value);}
+ else if(el.hasAttribute('data-grade-initial')){gradingState.coarse.initial=el.value.trim()===''?null:Number(el.value);}
+ else if(el.dataset.limitSieve!==undefined){const state=gradingState[gradingState.kind],sieve=Number(el.dataset.limitSieve);let limit=state.customLimits.find(r=>r.sieve===sieve);if(!limit){limit={sieve,min:null,max:null};state.customLimits.push(limit);}limit[el.dataset.limitBound]=el.value.trim()===''?null:Number(el.value);}
+ else if(el.hasAttribute('data-stats')){statsText=el.value;}
+ else return false;
+ persist();return true;
+}
+document.addEventListener('input',e=>{
+ if(e.target.tagName==='SELECT'||!updateFromElement(e.target))return;
+ clearTimeout(renderTimer);
+ renderTimer=setTimeout(()=>{const active=document.activeElement,id=active.id,sieve=active.dataset?.sieve,start=active.selectionStart,end=active.selectionEnd;render();const next=id?document.getElementById(id):sieve!==undefined?document.querySelector('[data-sieve="'+sieve+'"]'):null;if(next){next.focus({preventScroll:true});if(start!==null&&start!==undefined&&next.type!=='number')next.setSelectionRange(start,end);}},350);
+});
+document.addEventListener('change',e=>{
+ const el=e.target;
+ if(el.dataset.grade){const k=el.dataset.grade;if(k==='kind')gradingState.kind=el.value;else gradingState[gradingState.kind].profileId=el.value;clearTimeout(renderTimer);persist();render();}
+ else if(el.dataset.compare){if(el.dataset.compare==='a')comparisonA=el.value;else comparisonB=el.value;render();}
+ else if(el.tagName==='SELECT'&&updateFromElement(el)){clearTimeout(renderTimer);render();}
+});
+document.addEventListener('click',e=>{
+ const b=e.target.closest('button');if(!b||b.disabled)return;
+ clearTimeout(renderTimer);result=E.calculate(data);
+ try {if(b.dataset.page){page=b.dataset.page;render();window.scrollTo(0,0);return;}
+ if(b.dataset.action){handlers[b.dataset.action]?.();persist();render();}
+ if(b.dataset.load){const p=projects.find(p=>p.id===b.dataset.load);if(p){const loaded=P.parse({schemaVersion:p.schemaVersion||1,data:p.data,statsText:p.statsText,gradingState:p.gradingState});save();data=loaded.data;statsText=loaded.statsText;gradingState=loaded.gradingState;page='design';persist();render();toast('Versión cargada.');window.scrollTo(0,0);}}
+ if(b.dataset.delete){if(!window.confirm('¿Eliminar esta versión guardada? La mezcla abierta no se modifica.'))return;projects=projects.filter(p=>p.id!==b.dataset.delete);persist();render();toast('Versión eliminada.');}
+ }catch(err){toast(err.message);}
+});
+$('#import-file').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;try{if(file.size>2*1024*1024)throw new Error('El archivo supera 2 MB.');const obj=JSON.parse(await file.text()), parsed=P.parse(obj);save();data=parsed.data;statsText=parsed.statsText;gradingState=parsed.gradingState;page='design';persist();render();toast('Proyecto importado. La mezcla anterior quedó guardada.');}catch(err){toast('No se importó: '+err.message);}e.target.value='';});
+window.addEventListener('beforeunload',persist);
+render();
+})();
+</script></body></html>
