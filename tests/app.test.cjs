@@ -10,7 +10,7 @@ function start(initial=null,portable=false,blockedStorage=false){
  const localStorage={getItem:k=>storage.get(k)||null,setItem(k,v){if(blockedStorage)throw Error('Storage blocked');storage.set(k,v);}};
  const context={document,localStorage,console,Blob,URL:{createObjectURL:b=>{const id='blob:'+urls.size;urls.set(id,b);return id;},revokeObjectURL(){}},setTimeout(fn,ms){timers.push({fn,ms});return timers.length;},clearTimeout(id){if(timers[id-1])timers[id-1].ms=0;},scrollTo(){},addEventListener(){},print(){context.printed=true;},confirm:()=>false};
  context.window=context;vm.createContext(context);
- const files=['engine.js','grading.js','help.js','fieldwork.js','workbench.js','project.js','compare.js','report.js','app.js'];
+ const files=['engine.js', 'grading.js', 'help.js', 'fieldwork.js', 'workbench.js', 'lab-tests.js', 'lab-records.js', 'lab-ui.js', 'essay-guides.js', 'project.js', 'compare.js', 'report-figures.js', 'report.js', 'app.js'];
  if(portable){
   const html=fs.readFileSync(path.join(__dirname,'../dist/HormigonLab-portatil.html'),'utf8');
   assert.doesNotMatch(html,/<script[^>]+src=|<link[^>]+stylesheet|@import|fetch\(|XMLHttpRequest/);
@@ -21,8 +21,8 @@ function start(initial=null,portable=false,blockedStorage=false){
  const input=(dataset,value,tagName='INPUT')=>{const el={dataset,value:String(value),tagName,hasAttribute:k=>k==='data-stats'&&dataset.stats!==undefined};events[tagName==='SELECT'?'change':'input']({target:el});if(tagName!=='SELECT')timers.filter(t=>t.ms===350).forEach(t=>{t.ms=0;t.fn();});};
  return {click,input,nodes,storage,downloads,context,events,html:()=>node('#app').innerHTML,state:()=>JSON.parse(storage.get('hormigonlab.v1'))};
 }
-test('las ocho secciones renderizan con los módulos reales',()=>{
- const app=start();for(const page of ['design','materials','lab','results','batch','trial','projects','guide']){app.click({page});assert.match(app.html(),/<h1>/);assert.doesNotMatch(app.html(),/NaN|undefined/);}
+test('las diez secciones renderizan con los módulos reales',()=>{
+ const app=start();for(const page of ['design','materials','lab','results','batch','trial','projects','guide','reports','guides']){app.click({page});assert.match(app.html(),/<h1>/);assert.doesNotMatch(app.html(),/NaN|undefined/);}
 });
 test('edición de input recalcula y autoguarda; blanco bloquea resultados',()=>{
  const app=start();app.input({field:'fc'},'21');assert.equal(app.state().data.fc,21);assert.match(app.html(),/403,4/);
@@ -73,8 +73,8 @@ test('versiones corruptas se respaldan y no rompen la biblioteca',()=>{
  const original={schemaVersion:2,data:E.defaults,projects:[{id:'bad',schemaVersion:2,data:{fc:'error'}}]};
  const app=start(original);app.click({page:'projects'});assert.match(app.html(),/Comparador de dos escenarios/);assert.equal(app.storage.get('hormigonlab.v1.recovery'),JSON.stringify(original));
 });
-test('portátil ejecuta las ocho secciones sin recursos externos y produce exportaciones',async()=>{
- const app=start(null,true);for(const page of ['design','materials','lab','results','batch','trial','projects','guide']){app.click({page});assert.match(app.html(),/<h1>/);}
+test('portátil ejecuta las diez secciones sin recursos externos y produce exportaciones',async()=>{
+ const app=start(null,true);for(const page of ['design','materials','lab','results','batch','trial','projects','guide','reports','guides']){app.click({page});assert.match(app.html(),/<h1>/);}
  app.click({action:'report'});assert.equal(app.downloads.length,1);assert.match(await app.downloads[0].blob.text(),/436,869417/);
 });
 
@@ -137,4 +137,19 @@ test('límite simétrico de 16 MiB: no se descarga un respaldo sobredimensionado
  assert.doesNotThrow(()=>P.checkBackupSize(16*1024*1024));
  let read=false;await app.events['#import-file:change']({target:{files:[{size:16*1024*1024+1,text(){read=true;}}],value:'exceso.json'}});
  assert.equal(read,false);assert.match(app.nodes['#toast'].textContent,/No se importó: .*16 MiB/);
+});
+
+test('nuevo ensayo conserva mediciones en autoguardado, JSON y recuperación',async()=>{
+ const app=start();app.click({page:'lab'});app.click({labCategory:'fresh'});
+ for(const [key,value] of Object.entries({tare:5,full:29,litres:10,mass:72,nominal:.04}))app.input({labKind:'freshDensity',labField:key},value);
+ for(const [key,value] of Object.entries({sample:'Muestra QA',source:'Registro de práctica',date:'2026-11-23'}))app.input({labKind:'freshDensity',labMeta:key},value);
+ app.click({action:'record-lab'});assert.match(app.nodes['#toast'].textContent,/Ensayo guardado/);
+ const state=app.state();assert.equal(state.labState.records.length,1);assert.equal(state.labState.records[0].values.mass,72);assert.equal(state.labState.records[0].mode,'demo');
+ app.click({action:'export'});const blob=app.downloads[0].blob,destination=start();await destination.events['#import-file:change']({target:{files:[blob],value:'ensayo.json'}});
+ assert.deepEqual(destination.state().labState,state.labState);
+ const resumed=start(destination.state());resumed.click({page:'lab'});resumed.click({labCategory:'fresh'});assert.match(resumed.html(),/Muestra QA/);assert.match(resumed.html(),/2.400/);
+});
+test('ensayo incompleto no se guarda y filtros de guías funcionan',()=>{
+ const app=start();app.click({page:'lab'});app.click({action:'record-lab'});assert.match(app.nodes['#toast'].textContent,/Código de muestra/);
+ app.click({page:'guides'});app.click({guideCategory:'hardened'});assert.match(app.html(),/Compresión de cilindros/);assert.doesNotMatch(app.html(),/Finos por lavado/);
 });

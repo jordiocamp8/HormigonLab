@@ -1,0 +1,20 @@
+const test=require('node:test'),assert=require('node:assert/strict');
+const L=require('../dist/lab-tests'),B=require('../dist/lab-records'),P=require('../dist/project'),E=require('../dist/engine'),R=require('../dist/report'),J=require('../dist/essay-guides');
+test('lavado independiente y masas imposibles',()=>{assert.equal(L.calculate('washedFines',{initial:500,final:485}).rows[0].value,3);assert.throws(()=>L.calculate('washedFines',{initial:500,final:501}));});
+test('densidad por recipiente y rendimiento por masa real',()=>{const r=L.calculate('freshDensity',{tare:5,full:29,litres:10,mass:72,nominal:.04});assert.deepEqual(r.rows.map(x=>x.value),[2400,.03,75]);});
+test('compresión nominal conserva edad y no proyecta',()=>{const r=L.calculate('compression',{diameter1:150,diameter2:150,height:300,load:500,age:7,curing:'Agua',fracture:'Registrada'});assert.ok(Math.abs(r.rows[2].value-28.2942121)<1e-6);assert.match(r.warnings.join(' '),/No aplica correcciones/);});
+test('aire presión y volumétrico conservan correcciones separadas',()=>{assert.equal(L.calculate('pressureAir',{reading:5,correction:.5,method:'Equipo calibrado'}).rows[0].value,4.5);assert.equal(L.calculate('volumetricAir',{reading:5,added:1,correction:.5,method:'Hoja de ensayo'}).rows[0].value,5.5);assert.throws(()=>L.calculate('pressureAir',{reading:0,correction:1,method:'a'}));});
+test('absorción y vacíos: cuatro estados distintos',()=>{const r=L.calculate('hardenedDensity',{a:1000,b:1050,c:1100,d:600,rho:1000});assert.deepEqual(r.rows.map(x=>x.value),[5,10,2000,20]);assert.throws(()=>L.calculate('hardenedDensity',{a:1000,b:990,c:1100,d:600,rho:1000}));});
+test('borrador incompleto se conserva; registro exige identidad y valores',()=>{const s=B.normalize({drafts:{washedFines:{values:{initial:500,final:null}}},records:[]});assert.equal(s.drafts.washedFines.values.final,null);assert.throws(()=>B.create('washedFines',{initial:500},{id:'x',sample:'a',source:'b',mode:'real',date:'2026-11-23'}));for(const v of [NaN,Infinity,'500'])assert.throws(()=>L.validateValues('washedFines',{initial:v},{partial:true}));});
+test('schema4 ida/vuelta y migración anterior sin ensayos inventados',()=>{const record=B.create('washedFines',{initial:500,final:485},{id:'uno',sample:'Arena',source:'Hoja1',mode:'real',date:'2026-11-23'});const packed=P.pack(E.defaults,{labState:{drafts:{},records:[record]}});assert.equal(P.parse(packed).labState.records[0].values.final,485);assert.equal(P.parse({...packed,schemaVersion:3}).labState.records.length,0);assert.throws(()=>B.normalize({records:[record,record]}));});
+test('informe comparte estilo, gráficas opcionales y ficha resumida',()=>{const r=E.calculate(E.defaults);const a=R.buildDocument(E.defaults,r),b=R.buildDocument(E.defaults,r,{format:'technical',includeGraphs:false,includeCalculations:false});assert.match(a,/Figura 1/);assert.match(a,/<svg/);assert.match(a,/report-document academic/);assert.doesNotMatch(b,/<svg|Anexo A/);assert.match(b,/FICHA TÉCNICA/);});
+test('guías distinguen orientación, normas oficiales y acceso',()=>{assert.equal(J.entries.length,12);assert.match(J.render(),/no el texto oficial/);assert.match(J.render('fresh'),/T 119/);assert.doesNotMatch(J.render('fresh'),/Densidad y absorción de arena/);});
+
+test('informe conserva entradas de ensayo, referencia y sustitución antes del anexo',()=>{
+ const d={...E.defaults,dataMode:'real'},r=E.calculate(d),record=B.create('washedFines',{initial:500,final:485},{id:'uno',sample:'Arena trazable',source:'Hoja de ensayo 1',mode:'real',date:'2026-11-23'});
+ const html=R.buildBody(d,r,{labState:{records:[record]}});
+ assert.match(html,/Medición original/);assert.match(html,/100 × \(500 − 485\) \/ 500/);assert.match(html,/ASTM C117/);
+ assert.ok(html.indexOf('<h2>Referencias</h2>')<html.indexOf('Anexo A.'));
+ assert.doesNotMatch(html,/Datos y resultados del apartado|K\. J\.\./);
+ const demo=R.buildBody(E.defaults,E.calculate(E.defaults),{labState:{records:[record]}});assert.doesNotMatch(demo,/Arena trazable/);
+});

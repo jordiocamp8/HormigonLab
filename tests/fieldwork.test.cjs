@@ -63,7 +63,7 @@ test('fichas de cemento, agua y aditivo no sustituyen los criterios de dosificac
 test('proyecto v3: respaldo JSON y versión guardada conservan bitácora con probetas y fichas sin alias',()=>{
  const d=design(),b=make(d,{specimens:[sample()]}),m=F.material('fine',d,'Arena A','Ensayo 1','2026-11-01');
  const record={data:d,journal:[b],materials:[m],statsText:'',gradingState:P.defaultGrading()},raw=P.pack(d,record);
- assert.equal(raw.schemaVersion,3);assert.equal(raw.engineVersion,'1.2.0');
+ assert.equal(raw.schemaVersion,4);assert.equal(raw.engineVersion,'1.3.0');
  const restored=P.parse(JSON.parse(JSON.stringify(raw))),saved=P.saveVersion([],record,{id:'v3'})[0];
  assert.deepEqual(restored.journal,[b]);assert.deepEqual(restored.materials,[m]);assert.deepEqual(F.summary(restored.journal[0]),F.summary(b));
  saved.journal[0].specimens[0].load=1;assert.equal(b.specimens[0].load,450);assert.equal(restored.journal[0].specimens[0].load,450);
